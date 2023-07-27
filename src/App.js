@@ -30,15 +30,6 @@ function App() {
     ? skills_field
     : field;
 
-  function convert_image(state) {
-    if (state === true) {
-      return {field}
-    }
-    else {
-      return {skills_field}
-    }
-  }
-
   return (  
     <div>
       <div className='skills'>
