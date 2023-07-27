@@ -35,13 +35,13 @@
     box-sizing: border-box;
   }
   .inner:before {
-    content: "YES";
+    content: "";
     padding-left: 10px;
     background-color: #060;
     color: #fff;
   }
   .inner:after {
-    content: "NO";
+    content: "";
     padding-right: 10px;
     background-color: #bbb;
     color: #fff;
