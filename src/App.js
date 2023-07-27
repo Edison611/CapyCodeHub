@@ -52,6 +52,19 @@ function App() {
       <div className='skills'>
       <ToggleSwitch label="Skills: " onToggle={handleToggle}/>
       </div>
+      <div className='stats'>
+        Bot Width:
+        <form>
+            <input type='' />
+        </form>
+        Bot Length:
+        <form>
+            <input type='' />
+        </form>
+        <div className='save-button'>
+        <button className='button-29'>Save</button>
+        </div>
+      </div>
       <div className='container_main'>
         {/* <form>
           <label> Enter Coordinates:
@@ -67,11 +80,7 @@ function App() {
             ({convert_coord(localMousePos.x, localMousePos.y)})
           </b>
         </div>
-
       </div>
-      <h2>Width: {windowSize[0]}</h2>
-
-      <h2>Height: {windowSize[1]}</h2>
     </div>
   );
 }
