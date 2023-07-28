@@ -1,17 +1,17 @@
 {
   "files": {
-    "main.css": "/robot-tracker/static/css/main.d431a448.css",
-    "main.js": "/robot-tracker/static/js/main.0fce2076.js",
+    "main.css": "/robot-tracker/static/css/main.c1712e7a.css",
+    "main.js": "/robot-tracker/static/js/main.d0ef8ad5.js",
     "static/js/787.887754f9.chunk.js": "/robot-tracker/static/js/787.887754f9.chunk.js",
     "static/media/skills-field.png": "/robot-tracker/static/media/skills-field.a310fb5e2fe2e0494097.png",
     "static/media/field.png": "/robot-tracker/static/media/field.f6ab0a9703ba39c25953.png",
     "index.html": "/robot-tracker/index.html",
-    "main.d431a448.css.map": "/robot-tracker/static/css/main.d431a448.css.map",
-    "main.0fce2076.js.map": "/robot-tracker/static/js/main.0fce2076.js.map",
+    "main.c1712e7a.css.map": "/robot-tracker/static/css/main.c1712e7a.css.map",
+    "main.d0ef8ad5.js.map": "/robot-tracker/static/js/main.d0ef8ad5.js.map",
     "787.887754f9.chunk.js.map": "/robot-tracker/static/js/787.887754f9.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.d431a448.css",
-    "static/js/main.0fce2076.js"
+    "static/css/main.c1712e7a.css",
+    "static/js/main.d0ef8ad5.js"
   ]
 }
