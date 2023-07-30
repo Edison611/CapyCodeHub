@@ -7,7 +7,7 @@ import ToggleSwitch from '../components/ToggleSwitch';
 import BotDrawer from '../components/BotDrawer'
 import Navbar from "../components/Navbar";
 
-const Tracker = () => {
+const PathRecord = () => {
     const [localMousePos, setLocalMousePos] = useState({});
     const [skills, setSkills] = useState(false);
 
@@ -66,8 +66,6 @@ const Tracker = () => {
     const [squareWidth, setSquareWidth] = useState(10);
     const [squareHeight, setSquareHeight] = useState(12);
 
-    const [startPos, setStartPos] = useState([0, 0]);
-
     const handleSquareWidthChange = (event) => {
         setSquareWidth(parseInt(event.target.value));
     };
@@ -75,24 +73,7 @@ const Tracker = () => {
     const handleSquareHeightChange = (event) => {
         setSquareHeight(parseInt(event.target.value));
     };
-
-    const handleStartingPosX = (event) => {
-        setStartPos([parseInt(event.target.value), startPos[1]])
-    }
-
-    const handleStartingPosY = (event) => {
-        
-        setStartPos([startPos[0], parseInt(event.target.value)])
-    }
-
-    const [squareRotation, setSquareRotation] = useState(0);
-
-    const handleSquareRotationChange = (event) => {
-        setSquareRotation(parseInt(event.target.value));
-    };
-
     var position = mouseToCoord(localMousePos.x, localMousePos.y)
-    var botPosition = coordToMouse(startPos[0], startPos[1])
     var botSize = valToSize(squareWidth, squareHeight);
 
     const [showText, setShowText] = useState(false);
@@ -101,6 +82,40 @@ const Tracker = () => {
     const handleToggleText = () => {
         setShowText((prevState) => !prevState);
       };
+    
+
+    const [coordinatesText, setCoordinatesText] = useState("");
+    const [coordinatesList, setCoordinatesList] = useState([]);
+    const [currentCoordIndex, setCurrentCoordIndex] = useState(0);
+
+    // Parse the coordinates entered in the text box
+    const handleCoordinatesChange = (event) => {
+    setCoordinatesText(event.target.value);
+    };
+
+    // Function to split the coordinates text and update the coordinatesList state
+    const updateCoordinatesList = () => {
+    const coords = coordinatesText.trim().split("\n");
+    setCoordinatesList(coords);
+    setCurrentCoordIndex(0);
+    };
+
+    // Function to handle forward and backward buttons to show next/previous coordinates
+    const handleNextCoordinate = () => {
+    setCurrentCoordIndex((prevIndex) =>
+        prevIndex < coordinatesList.length - 1 ? prevIndex + 1 : prevIndex
+    );
+    };
+
+    const handlePreviousCoordinate = () => {
+    setCurrentCoordIndex((prevIndex) => (prevIndex > 0 ? prevIndex - 1 : prevIndex));
+    };
+
+
+    var botPosition = coordToMouse(
+        currentCoordIndex < coordinatesList.length ? parseInt(coordinatesList[currentCoordIndex].split(",")[0]) : 0,
+        currentCoordIndex < coordinatesList.length ? parseInt(coordinatesList[currentCoordIndex].split(",")[1]) : 0
+    )
 
     return (  
         <div>
@@ -130,36 +145,7 @@ const Tracker = () => {
                     onChange={handleSquareHeightChange}
                 />
             </div>
-            <div>
-                <label htmlFor="">X: </label>
-                <input
-                    className="botStats"
-                    type="number"
-                    id="startingX"
-                    value={startPos[0]}
-                    onChange={handleStartingPosX}
-                />
-                <label>Y: </label>
-                <input
-                    className="botStats"
-                    type="number"
-                    min="-72"
-                    max="72"
-                    id="startingY"
-                    value={startPos[1]}
-                    onChange={handleStartingPosY}
-                />
-                <label>θ: </label>
-                <input
-                    className="botStats"
-                    type="number"
-                    min="-360"
-                    max="360"
-                    id="angle"
-                    value={squareRotation}
-                    onChange={handleSquareRotationChange}
-                />
-            </div>
+           
             <div className="toggle-container">
             Show text:
                 <input
@@ -174,9 +160,22 @@ const Tracker = () => {
                     </span>
                 </label>
             </div>
-            {/* <div className='save-button'>
-            <button className='button-29'>Save</button>
-            </div> */}
+            <br /><br />
+            Enter Coordinates: <br></br>
+            ("x, y, angle")
+            <div>
+                <textarea
+                    rows="5"
+                    cols="30"
+                    value={coordinatesText}
+                    onChange={handleCoordinatesChange}
+                />
+            </div>
+            <div>
+                <button onClick={updateCoordinatesList}>Update Coordinates</button>
+                <button onClick={handlePreviousCoordinate}>Backward</button>
+                <button onClick={handleNextCoordinate}>Forward</button>
+            </div>
         </div>
         <div className='container_main'>
             {/* <form>
@@ -194,16 +193,16 @@ const Tracker = () => {
             </b>
             </div>
             <BotDrawer
-            x={(botPosition[0] - botSize[0] / 2)}
-            y={(botPosition[1] - botSize[1] / 2)}
-            width={botSize[0]}
-            height={botSize[1]}
-            rotation={squareRotation}
-            showText={showText}
+                x={(botPosition[0] - botSize[0] / 2)}
+                y={(botPosition[1] - botSize[1] / 2)}
+                width={botSize[0]}
+                height={botSize[1]}
+                rotation={currentCoordIndex < coordinatesList.length ? parseInt(coordinatesList[currentCoordIndex].split(",")[2]) : 0}
+                showText={showText}
             />
         </div>
         </div>
     );
 }
 
-export default Tracker
+export default PathRecord
