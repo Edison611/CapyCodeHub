@@ -1,6 +1,6 @@
 // HomePage.js
 import React from 'react';
-import "./home.css"
+import "../page-styles/home.css"
 import { useNavigate } from 'react-router-dom';
 
 const Home = () => {
@@ -11,12 +11,18 @@ const Home = () => {
         <h1>Under Construction 🚧</h1>
         <p>A website to help with programming for VEX Robotics. Made with help from ChatGPT</p>
       </header>
-
       <main>
+      <section id="tracker" className="project-info">
+          <h2>Welcome to 2055's Programming Website!</h2>
+          <p>
+            This is a website that helps with programming for Vex Robotics Competitions (VRC)
+          </p>
+      </section>
+
         <section className="hero">
           <div className="hero-content">
-            <h2>Welcome to Your Project</h2>
-            <p>Give a catchy tagline or introduction here.</p>
+            <h2>Robot Position Tracker</h2>
+            <p>A webpage to help with figuring out the placement of robots</p>
             <div className=''>
                 <button className="button-42" onClick={ () => navigate("/tracker")} >Robot Position</button>
                 <br />
@@ -25,15 +31,18 @@ const Home = () => {
             </div>
           </div>
         </section>
+        <br />
 
-        <section id="tracker" className="project-info">
-          <h2>Project Tracker</h2>
-          <p>
-            Provide a summary of what the project tracker is and how it works. 
-            Describe its main features and benefits.
-          </p>
-          {/* Add any other relevant information about the project */}
+        <section className="scouting">
+          <div className="scouting-content">
+            <h2>Scouting</h2>
+            <p>A webpage to help with scouting</p>
+            <div className=''>
+                <button className="button-42" onClick={ () => navigate("/scouting")} >Scouting</button>
+            </div>
+          </div>
         </section>
+        
 
         <section className="contact">
           <h2>Contact Us</h2>

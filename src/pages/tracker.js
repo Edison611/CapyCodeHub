@@ -1,5 +1,5 @@
 import React from "react";
-import "./tracker.css";
+import "../page-styles/tracker.css";
 import { useState, useEffect } from 'react';
 import field from '../images/field.png'
 import skills_field from '../images/skills-field.png'

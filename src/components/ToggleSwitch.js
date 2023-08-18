@@ -1,5 +1,5 @@
 import React from "react";
-import "./ToggleSwitch.css";
+import "../component-styles/ToggleSwitch.css";
 import { useState } from "react";
   
 const ToggleSwitch = ({ label, onToggle}) => {
