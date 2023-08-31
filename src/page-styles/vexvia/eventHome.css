@@ -1,0 +1,97 @@
+
+
+.event-details {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 40vh;
+    text-align: center;
+    font-family: 'CoolFont', sans-serif; /* Use a cool font */
+  }
+  
+  .event-title {
+    font-size: 3vw;
+    font-weight: bold;
+    padding: 10px;
+    margin-bottom: 2%;
+  }
+  
+  .event-info {
+    font-size: 2vw;
+    color: #555;
+    margin-bottom: 1%;
+  }
+  
+  .loading {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    font-size: 24px;
+    font-weight: bold;
+    font-family: 'CoolFont', sans-serif;
+  }
+  
+  .error {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    font-size: 24px;
+    font-weight: bold;
+    font-family: 'CoolFont', sans-serif;
+    color: red;
+  }
+
+.event-details-columns {
+  display: flex;
+  justify-content: center;
+  width: 80%;
+  max-width: 1200px;
+  margin: auto;
+}
+
+.event-details-left {
+  flex: 1;
+  background-color: #d94c4c;
+  padding: 1%;
+  margin: 1%;
+  color: white;
+  text-align: center;
+}
+
+.event-details-right {
+  flex: 1;
+  background-color: #4c6fd9;
+  padding: 1%;
+  margin: 1%;
+  color: white;
+  text-align: center;
+}
+
+hr {
+  height: 1px;
+  background-color: white;
+  border: none;
+}
+/* Add any other styles as needed */
+
+.display {
+  background-color: white;
+  color: #555;
+  align-items: center;
+  height: 4.5vw;
+  padding: 10px 0;
+}
+
+.display:hover {
+  background-color: lightgray;
+}
+
+ul {
+  list-style-type: none;
+}
+  
+  /* Add any other styles as needed */
+  

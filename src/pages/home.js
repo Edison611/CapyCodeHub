@@ -39,6 +39,7 @@ const Home = () => {
             <p>A webpage to help with scouting</p>
             <div className=''>
                 <button className="button-42" onClick={ () => navigate("/scouting")} >Scouting</button>
+                <button className="button-42" onClick={ () => navigate("/vexvia")} >Vex Via</button>
             </div>
           </div>
         </section>

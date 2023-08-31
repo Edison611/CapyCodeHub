@@ -1,0 +1,33 @@
+.event-display {
+    display: flex;
+    border: 1px solid #ccc;
+    padding: 20px;
+    margin: 2px;
+    background-color: white;
+    width: 80vw;
+  }
+
+  .event-display:hover {
+    background-color: lightgrey;
+  }
+
+  .event-info {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .event-name {
+    font-size: 2vw;
+    font-weight: bold;
+  }
+
+  .event-location {
+    font-size: 1.25vw;
+    color: #555;
+  }
+  
+  .event-date {
+    padding-top: 2%;
+    font-size: 1.25vw;
+    color: #555;
+  }

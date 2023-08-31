@@ -1,13 +1,13 @@
 import React from 'react';
-import '../component-styles/TeamDisplay.css'; 
-import Overlay from './Overlay';
+import '../component-styles/EventDisplay.css'; 
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
-const TeamDisplay = ({ number, name, id }) => {
-  const [overlayOpen, setOverlayOpen] = useState(false);
-  // 139521
+const EventDisplay = ({ name, location, date, id }) => {
 
-  var [skills, setSkills] = useState([]);
+  const navigate = useNavigate()
+
+
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(true);
 
@@ -16,12 +16,8 @@ const TeamDisplay = ({ number, name, id }) => {
 
   function handleClick() {
     setLoading(true)
-    if (overlayOpen === true) {
-      return
-    }
-    setOverlayOpen(!overlayOpen)
-    const apiUrl = 'https://www.robotevents.com/api/v2/teams/';
-    fetch(`${apiUrl}${id}/skills?season%5B%5D=181`, {
+    const apiUrl = 'https://www.robotevents.com/api/v2/events/'
+    fetch(`${apiUrl}${id}/`, {
       headers: {
         Authorization: `Bearer ${accessToken}`
       }
@@ -30,8 +26,10 @@ const TeamDisplay = ({ number, name, id }) => {
       return response.json();
     })
     .then(data => {
-      setSkills(data.data)
+      const eventDetailsPath = `/vexvia/${id}`
+      navigate(eventDetailsPath)
       setLoading(false)
+
     })
     .catch(error => {
       setError(error);
@@ -45,32 +43,14 @@ const TeamDisplay = ({ number, name, id }) => {
     <div>An Error Has Occured, Please Refresh The Page.</div>
   }
   return (
-    
-    <div className="team-display" onClick={handleClick}>
-      <div className="team-info">
-        <div className="team-name">{number}{name}</div>
+    <div className="event-display" onClick={handleClick}>
+      <div className="event-info">
+        <div className="event-name">{name}</div>
+        <div className="event-location">{location}</div>
+        <div className="event-date">Start: {date[0]}, End: {date[1]}</div>
       </div>
-      <br></br>
-      <Overlay isOpen={overlayOpen} onClose={()=>setOverlayOpen(!overlayOpen) }>
-        <div className="header">{number} || {name}</div>
-        {loading ? (
-          <div>LOADING</div>
-          ) : (
-            <>
-            {skills && skills.length > 0 ? (
-              <ul> 
-                {skills.map(attempt => (
-                  <li key={id+1}>Event: {attempt.event.name}, {attempt.score}, {attempt.type}</li>
-              ))}
-              </ul>
-              ) : (
-              <div>NO DATA FOUND</div>
-            )}
-            </>)
-        }
-      </Overlay>
     </div>
   );
 };
 
-export default TeamDisplay;
+export default EventDisplay;

@@ -1,0 +1,53 @@
+/* Example styling for the Display component */
+.display {
+    margin-bottom: 10px;
+  }
+  
+  .display-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .display-item {
+    flex: 1;
+    padding: 5px;
+    text-align: center;
+  }
+  
+  .display-divider {
+    border-bottom: 1px solid #ccc;
+    margin-top: 5px;
+  }
+  
+  .page-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .teams-table {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+  }
+
+  .num {
+    font-size: 3vw;
+  }
+  
+  .column {
+    flex: 1;
+    padding: 10px;
+    margin: 5px;
+  }
+  
+  .column h2 {
+    font-size: 16px;
+    margin-bottom: 5px;
+  }
+  
+  .column > div {
+    margin-bottom: 5px;
+  }
+  

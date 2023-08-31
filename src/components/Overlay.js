@@ -1,4 +1,4 @@
-import { Fragment, useState, useEffect } from "react";
+import { Fragment } from "react";
 import "../component-styles/overlay.css";
 
 export function Overlay({ isOpen, onClose, children }) {

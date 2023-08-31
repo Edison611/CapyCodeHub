@@ -1,15 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import TextField from "@mui/material/TextField"
-import TeamDisplay from '../components/TeamDisplay';
-import '../page-styles/scouting.css'
+import EventDisplay from '../components/EventDisplay';
+import '../page-styles/vexvia.css'
 import { useNavigate } from "react-router-dom";
 import logo from "../images/logo.png"
 
-function Scouting() {
+function Vexvia() {
   const navigate = useNavigate();
   const [inputText, setInputText] = useState("");
 
-  var [teams, setTeams] = useState([]);
+  var [events, setEvents] = useState([]);
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(true);
 
@@ -18,11 +18,11 @@ function Scouting() {
 
   // Fetches team data
   useEffect(() => {
-    const apiUrl = 'https://www.robotevents.com/api/v2/teams';
+    const apiUrl = 'https://www.robotevents.com/api/v2/events';
 
     function fetchDataForPage(page){
 
-      fetch(`${apiUrl}?page=${page}&per_page=100&registered=true&program%5B%5D=1&grade%5B%5D=High%20School`, {
+      fetch(`${apiUrl}?page=${page}&per_page=100&season%5B%5D=181&eventTypes%5B%5D=tournament`, {
         headers: {
           Authorization: `Bearer ${accessToken}`
         }
@@ -31,7 +31,7 @@ function Scouting() {
         return response.json();
       })
       .then(data => {
-        setTeams(prevData => [...prevData, ...data.data])
+        setEvents(prevData => [...prevData, ...data.data])
       })
       .catch(error => {
         setError(error);
@@ -60,14 +60,14 @@ function Scouting() {
   }, [accessToken]);
 
 
-  const filteredData = (teams.filter((el) => {
+  const filteredData = (events.filter((el) => {
     //if no input the return the original
     if (inputText === '') {
         return el;
     }
     //return the item which contains the user input
     else {
-        return (el.number.toLowerCase() + el.team_name.toLowerCase()).includes(inputText)
+        return el.name.toLowerCase().includes(inputText)
     }
     }))
 
@@ -106,14 +106,14 @@ function Scouting() {
   return (
     <div className="main">
       <img src={logo} onClick={ () => navigate("/")} alt="" className='logo2'></img>
-      <h1>Scouting Search</h1>
+      <h1>Events</h1>
       <div className="search">
         <TextField
           id="outlined-basic"
           onChange={handleSearchChange}
           variant="outlined"
           fullWidth
-          label="Search for teams"
+          label="Search for events"
           value={inputText} // Bind the input value to the state
         />
       </div>
@@ -147,9 +147,9 @@ function Scouting() {
             <div>LOADING DATA</div>
         ) : (
       <ul>
-          {paginatedData.map(team => (
+          {paginatedData.map(event => (
             <li key={filteredData.id}>
-              <TeamDisplay name={ String(team.number) + " || "  + team.team_name} id={team.id}/>
+              <EventDisplay name={event.name} location={event.location.city + ', ' + event.location.country} date={[event.start.slice(0,10), event.end.slice(0, 10)]} id={event.id}  />
               </li>
           ))} 
       </ul>
@@ -159,4 +159,4 @@ function Scouting() {
   );
 }
 
-export default Scouting;
+export default Vexvia;
