@@ -22,7 +22,7 @@ function Vexvia() {
 
     function fetchDataForPage(page){
 
-      fetch(`${apiUrl}?page=${page}&per_page=100&season%5B%5D=181&eventTypes%5B%5D=tournament`, {
+      fetch(`${apiUrl}?page=${page}&per_page=250&season%5B%5D=181&eventTypes%5B%5D=tournament`, {
         headers: {
           Authorization: `Bearer ${accessToken}`
         }
@@ -39,7 +39,7 @@ function Vexvia() {
       });
     }
 
-    const totalPages = 3; // should be 12 for full use
+    const totalPages = 5; // should be 5 for full use
 
     function fetchAllData() {
       const fetchPromises = [];

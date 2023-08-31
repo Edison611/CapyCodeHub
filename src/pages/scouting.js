@@ -22,7 +22,7 @@ function Scouting() {
 
     function fetchDataForPage(page){
 
-      fetch(`${apiUrl}?page=${page}&per_page=100&registered=true&program%5B%5D=1&grade%5B%5D=High%20School`, {
+      fetch(`${apiUrl}?page=${page}&per_page=250&registered=true&program%5B%5D=1&grade%5B%5D=High%20School`, {
         headers: {
           Authorization: `Bearer ${accessToken}`
         }
@@ -39,7 +39,7 @@ function Scouting() {
       });
     }
 
-    const totalPages = 3; // should be 12 for full use
+    const totalPages = 12; // should be 12 for full use
 
     function fetchAllData() {
       const fetchPromises = [];
