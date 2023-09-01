@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import '../../page-styles/vexvia/Dropdown.css'
 
-const MatchDisplay = ({ matchnum, red1, red2, redscore, blue1, blue2, bluescore }) => {
+const MatchDisplay = ({ matchnum, red1, red2, redscore, blue1, blue2, bluescore, field, time }) => {
   const redWins = redscore > bluescore;
   const blueWins = bluescore > redscore;
 
@@ -24,6 +24,10 @@ const MatchDisplay = ({ matchnum, red1, red2, redscore, blue1, blue2, bluescore 
           {redscore}
           </strong>
         </div>
+      </div>
+      <div className='match-column'>
+        <div>{field}</div>
+        <div>{time}</div>
       </div>
       <div className={`match-column blue-column ${blueWins ? 'winner' : ''}`}>
         <div className="score-container">
@@ -60,6 +64,8 @@ const ScheduleDisplay = ({ data }) => {
                 blue1={match.alliances[0].teams[0].team.name}
                 blue2={match.alliances[0].teams[1].team.name}
                 bluescore={match.alliances[0].score}
+                field={match.field}
+                time={match.scheduled.slice(11, 16)}
             />
         ))}
       </ul>

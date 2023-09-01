@@ -12,7 +12,7 @@ const Display = ({ number, name, ranking, wp, ap, sp, wins, losses, ties }) => {
           <div className="display-item">{name}</div>
         </div>
         <div className="display-row">
-          <div className="display-item">{`${ranking} (${wins}-${losses}-${ties})`}</div>
+          <div className="display-item rankings"><strong>{ranking}</strong>{` (${wins}-${losses}-${ties})`}</div>
           <div className="display-item">{`${wp}WPs, ${ap}APs, ${sp}SPs`}</div>
         </div>
       </div>
@@ -33,7 +33,7 @@ const Display = ({ number, name, ranking, wp, ap, sp, wins, losses, ties }) => {
           </div>
           <div className="column">
             <div>
-              Rank: {ranking} | Win-Loss-Ties: {wins}-{losses}-{ties}
+              Rank: {ranking} | Win-Loss-Ties: ({wins}-{losses}-{ties})
             </div>
           </div>
         </div>
@@ -115,6 +115,8 @@ const Matches = () => {
     });
   }
 
+  console.log(teamsData)
+
   if (rankingsData.length > 0) {
     rankingsData.forEach((team) => {
       if (teamsMap[team.team.name]) {
@@ -129,9 +131,7 @@ const Matches = () => {
     })
   }
 
-  console.log(teamsData)
-  console.log(rankingsData)
-  console.log(teamsMap)
+
 
   return (
     <div>
@@ -151,8 +151,7 @@ const Matches = () => {
         )}
         
         {activePage === "rankings" && rankingsData && (
-          <div>
-            <h2>Rankings</h2>
+          <div className="container">
             <ul>
                 {rankingsData.map(team => (
                     <li key={team.id}>
@@ -165,8 +164,7 @@ const Matches = () => {
         )}
         
         {activePage === "teams" && teamsData && (
-          <div>
-            <h2>Teams</h2>
+          <div className="container">
             <ul>
                 {teamsData.map(team => (
                     <li key={team.id}>

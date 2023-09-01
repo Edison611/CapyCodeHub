@@ -5,6 +5,7 @@
     margin: 2px;
     background-color: white;
     width: 80vw;
+    text-align: left;
   }
 
   .event-display:hover {
