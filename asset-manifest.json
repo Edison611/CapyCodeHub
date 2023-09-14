@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/robot-tracker/static/css/main.64d99323.css",
-    "main.js": "/robot-tracker/static/js/main.83bfbdc9.js",
+    "main.js": "/robot-tracker/static/js/main.46025759.js",
     "static/js/787.887754f9.chunk.js": "/robot-tracker/static/js/787.887754f9.chunk.js",
     "static/media/skills-field.png": "/robot-tracker/static/media/skills-field.a310fb5e2fe2e0494097.png",
     "static/media/field.png": "/robot-tracker/static/media/field.f6ab0a9703ba39c25953.png",
@@ -9,11 +9,11 @@
     "static/media/logo.png": "/robot-tracker/static/media/logo.47974e040d5ae00d08a5.png",
     "index.html": "/robot-tracker/index.html",
     "main.64d99323.css.map": "/robot-tracker/static/css/main.64d99323.css.map",
-    "main.83bfbdc9.js.map": "/robot-tracker/static/js/main.83bfbdc9.js.map",
+    "main.46025759.js.map": "/robot-tracker/static/js/main.46025759.js.map",
     "787.887754f9.chunk.js.map": "/robot-tracker/static/js/787.887754f9.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.64d99323.css",
-    "static/js/main.83bfbdc9.js"
+    "static/js/main.46025759.js"
   ]
 }
