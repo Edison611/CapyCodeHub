@@ -50,7 +50,7 @@ const MatchDisplay = ({ matchnum, red1, red2, redscore, blue1, blue2, bluescore,
 
 
 const ScheduleDisplay = ({ data }) => {
-  console.log(data)
+  // console.log(data)
 
   return (
     <div className='box'>
