@@ -92,7 +92,7 @@ const Matches = () => {
       });
 
     // Fetch teams data
-    fetch(`${eventURL}/teams?per_page=250`, {
+    fetch(`${eventURL}teams?per_page=250`, {
       headers: {
           Authorization: `Bearer ${accessToken}`
         }
@@ -115,7 +115,7 @@ const Matches = () => {
     });
   }
 
-  console.log(teamsData)
+  // console.log(teamsData)
 
   if (rankingsData.length > 0) {
     rankingsData.forEach((team) => {

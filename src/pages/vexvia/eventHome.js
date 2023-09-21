@@ -61,7 +61,7 @@ const EventHome = () => {
   const date = eventData.start.slice(0,10) + " → " + eventData.end.slice(0,10)
   const address = eventData.location.city + ", " + eventData.location.region + ", " + eventData.location.country
   const divisions = eventData.divisions
-  console.log(eventData)
+  // console.log(eventData)
 
   return (
   <div>
