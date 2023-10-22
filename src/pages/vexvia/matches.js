@@ -140,7 +140,7 @@ const Matches = () => {
       <div>
         {/* Display fetched data based on the active page */}
         {activePage === "schedule" && scheduleData && (
-          <div>
+          <div className="container">
             <DropdownMenuComponent scheduleData={scheduleData} selectedRound={2} level={"Qualification"}/>
             <DropdownMenuComponent scheduleData={scheduleData} selectedRound={6} level={"Round of 16"}/>
             <DropdownMenuComponent scheduleData={scheduleData} selectedRound={3} level={"Quarterfinals"}/>
@@ -152,20 +152,20 @@ const Matches = () => {
         
         {activePage === "rankings" && rankingsData && (
           <div className="container">
-            <ul>
+            <div className="team-container">
                 {rankingsData.map(team => (
                     <li key={team.id}>
                         <Display number={team.team.name} name={teamsMap[team.team.name].name} ranking={team.rank} wp={team.wp} ap={team.ap} 
                         sp={team.sp} wins={team.wins} losses={team.losses} ties={team.ties} />
                     </li>
                 ))} 
-            </ul>
+            </div>
           </div>
         )}
         
         {activePage === "teams" && teamsData && (
-          <div className="container">
-            <ul>
+          <div className="team-container">
+            <div className="team-container">
                 {teamsData.map(team => (
                     <li key={team.id}>
                         <TeamsDisplay number={team.number} name={team.team_name} location={teamsMap[team.number].location} ranking={teamsMap[team.number].rank} 
@@ -173,7 +173,7 @@ const Matches = () => {
                         wins={teamsMap[team.number].wins} losses={teamsMap[team.number].losses} ties={teamsMap[team.number].ties} />
                     </li>
                 ))} 
-            </ul>
+            </div>
           </div>
         )}
       </div>

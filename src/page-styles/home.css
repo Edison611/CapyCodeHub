@@ -1,10 +1,4 @@
-/* HomePage.css */
-body {
-    margin: 0;
-    font-family: Arial, sans-serif;
-  }
-  
-  header {
+header {
     background-color: #333;
     color: #fff;
     text-align: center;

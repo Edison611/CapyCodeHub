@@ -7,7 +7,7 @@ import Scouting from './pages/scouting'
 import Vexvia from './pages/vexvia'
 import EventHome from './pages/vexvia/eventHome'
 import Matches from './pages/vexvia/matches'
-import SkillsPage from './pages/vexvia/skills'
+import Skills from './pages/vexvia/skills'
 
 function App() {
   return (
@@ -19,7 +19,7 @@ function App() {
         <Route path="/scouting" element={<Scouting />} />
         <Route path="/vexvia" element={<Vexvia />} />
         <Route path="/vexvia/:event_id" element={<EventHome />} />
-        <Route path="/vexvia/:event_id/skills" element={<SkillsPage />} />
+        <Route path="/vexvia/:event_id/skills" element={<Skills />} />
         <Route path="/vexvia/:event_id/division/:division_id/matches" element={<Matches />} />
       </Routes>
     </div>

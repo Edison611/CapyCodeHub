@@ -54,7 +54,7 @@ const ScheduleDisplay = ({ data }) => {
 
   return (
     <div className='box'>
-      <ul>
+      <div className='match-container'>
         {data.map((match) => (
             <MatchDisplay 
                 key={match.matchnum}
@@ -69,7 +69,7 @@ const ScheduleDisplay = ({ data }) => {
                 time={match.name[0] === 'Q' && match.name[1] === "u" ? match.scheduled.slice(11, 16): ""}
             />
         ))}
-      </ul>
+      </div>
     </div>
   );
 };

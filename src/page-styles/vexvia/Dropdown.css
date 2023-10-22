@@ -4,6 +4,11 @@
   text-align: center;
 }
 
+.match-container {
+  text-align: center;
+  margin: 0 auto;
+}
+
 .match-display {
   display: grid;
   grid-template-columns: 1fr 2fr 1fr 1fr 1fr 2fr;
@@ -14,7 +19,9 @@
   margin-bottom: 10px;
   background-color: white;
   font-size: 2vw;
-  width: 90vw;
+  text-align: center;
+  margin: 0 auto;
+  width: 88vw;
 }
 
 .match-column {
