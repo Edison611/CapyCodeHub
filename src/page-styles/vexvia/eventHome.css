@@ -1,14 +1,4 @@
 
-
-.event-details {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    height: 40vh;
-    text-align: center;
-    font-family: 'CoolFont', sans-serif; /* Use a cool font */
-  }
   
   .event-title {
     font-size: 3vw;
@@ -44,13 +34,26 @@
     color: red;
   }
 
-.event-details-columns {
-  display: flex;
-  justify-content: center;
-  width: 80%;
-  max-width: 1200px;
-  margin: auto;
-}
+  .event-details {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 40vh;
+    text-align: center;
+    font-family: 'CoolFont', sans-serif; /* Use a cool font */
+  }
+
+  .event-details-columns {
+    display: flex;
+    flex-wrap: column; /* Wrap items to the next line if they don't fit horizontally */
+    justify-content: center;
+    align-items: center; /* Align items to the top of the container */
+    width: 80%;
+    max-width: 1200px;
+    margin: auto;
+  }
+  
 
 .event-details-left {
   flex: 1;
@@ -64,6 +67,14 @@
 .event-details-right {
   flex: 1;
   background-color: #4c6fd9;
+  padding: 1%;
+  margin: 1%;
+  color: white;
+  text-align: center;
+}
+
+.event-details-bottom {
+  background-color: rgb(255, 207, 32);
   padding: 1%;
   margin: 1%;
   color: white;
@@ -92,6 +103,6 @@ hr {
 ul {
   list-style-type: none;
 }
-  
+
   /* Add any other styles as needed */
   

@@ -50,6 +50,11 @@ const EventHome = () => {
     navigate(path)
   }
 
+  function goToAwards() {
+    const path = `/vexvia/${event_id}/awards`
+    navigate(path)
+  }
+
   if (loading) {
     return <div>Loading...</div>;
   }
@@ -71,6 +76,7 @@ const EventHome = () => {
           <div className="event-title">{eventData.name}</div>
           <div className="event-info">{date}</div>
           <div className="event-info">{address}</div>
+          <div className="event-info"><strong>{eventData.level} Event</strong></div>
         </div>
       )}
     </div>
@@ -95,7 +101,15 @@ const EventHome = () => {
           <Display title={"Skills Challenge Rankings"} />
           </li>
         </div>
+        
       </div>
+      <div className="event-details-bottom">
+          <h2>Awards</h2>
+              <hr />
+              <div onClick={goToAwards}>
+              <Display title={"Awards"} />
+              </div>
+        </div>
   </div>
 
   );

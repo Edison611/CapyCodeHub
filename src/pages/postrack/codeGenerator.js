@@ -114,9 +114,9 @@ const CodeGenerator = () => {
         var prev = [0, 0, 0]
         const codeLines = coords.map((coord, i) => {
             const [x, y, angle] = coord.split(",").map(item => item.trim());
-            var timeout = Math.round(Math.sqrt(Math.pow(x-prev[0], 2) + Math.pow(y-prev[1], 2)) * 1000/24 + 200); // 1000 / 24 is the speed of bot (time / inches)
-            if (timeout < 500) {
-                timeout = 500
+            var timeout = Math.round(Math.sqrt(Math.pow(x-prev[0], 2) + Math.pow(y-prev[1], 2)) * 1200/24 + 250); // 1000 / 24 is the speed of bot (time / inches)
+            if (timeout < 800) {
+                timeout = 800
             }
             prev = [x, y, angle]
             if (i === 0) {

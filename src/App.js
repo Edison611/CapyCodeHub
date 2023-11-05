@@ -9,6 +9,7 @@ import EventHome from './pages/vexvia/eventHome'
 import Matches from './pages/vexvia/matches'
 import Skills from './pages/vexvia/skills'
 import CodeGenerator from './pages/postrack/codeGenerator'
+import Awards from './pages/vexvia/Awards'
 
 function App() {
   return (
@@ -23,6 +24,7 @@ function App() {
         <Route path="/vexvia/:event_id" element={<EventHome />} />
         <Route path="/vexvia/:event_id/skills" element={<Skills />} />
         <Route path="/vexvia/:event_id/division/:division_id/matches" element={<Matches />} />
+        <Route path="/vexvia/:event_id/awards" element={<Awards />} />
       </Routes>
     </div>
   )

@@ -1,0 +1,42 @@
+/* awards.css */
+
+.awards-container {
+    columns: 3; /* Adjust the number of columns as needed */
+    column-gap: 20px; /* Adjust the gap between columns */
+  }
+  
+  .award-card {
+    break-inside: avoid; /* Prevent breaking individual award cards across columns */
+    width: 100%; /* Allow each card to take full width of the column */
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    margin: 10px 0;
+    padding: 10px;
+    background-color: #f8f8f8;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s;
+  }
+  
+  .award-card:hover {
+    transform: translateY(-2px);
+  }
+  
+  .award-card h2 {
+    font-size: 18px;
+    margin: 0;
+  }
+  
+  .award-card p {
+    margin: 5px 0;
+  }
+  
+  .award-card ul {
+    list-style: none;
+    padding: 0;
+  }
+  
+  .award-card li {
+    font-weight: bold;
+    margin-left: 20px;
+  }
+  
