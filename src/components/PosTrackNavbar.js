@@ -1,22 +1,21 @@
 import React from 'react';
-import "../component-styles/Navbar.css"
+import "../component-styles/PosTrackNavbar.css"
 import { useNavigate } from "react-router-dom";
 import logo from "../images/logo.png"
 
 
-const Navbar = () => {
+const PosTrackNavbar = () => {
     const navigate = useNavigate();
     return (
-        <div>
+        <div className='side-nav-container'>
             <img src={logo} onClick={ () => navigate("/")} alt="" className='logo'></img>
             <div className='navigation'>
                 <button className="button-42" onClick={ () => navigate("/tracker")} >Robot Position</button>
-                <br />
-                <br />
                 <button className="button-42" onClick={ () => navigate("/path-record")} >Path Visualizer</button>
+                <button className="button-42" onClick={ () => navigate("/code-generator")} >Code Generator</button>
             </div>
         </div>
     )
 }
 
-export default Navbar;
+export default PosTrackNavbar;

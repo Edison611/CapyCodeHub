@@ -1,15 +1,27 @@
 import React from "react";
-import "../page-styles/tracker.css";
-import { useState, useEffect } from 'react';
-import field from '../images/field.png'
-import skills_field from '../images/skills-field.png'
-import ToggleSwitch from '../components/ToggleSwitch';
-import BotDrawer from '../components/BotDrawer'
-import Navbar from "../components/Navbar";
+import "../../page-styles/postrack/tracker.css";
+import "../../page-styles/postrack/codeGenerator.css";
+import { useState, useEffect, useRef } from 'react';
+import field from '../../images/field.png'
+import skills_field from '../../images/skills-field.png'
+import ToggleSwitch from '../../components/ToggleSwitch';
+import BotDrawer from '../../components/BotDrawer'
+import PosTrackNavbar from "../../components/PosTrackNavbar";
 
-const PathRecord = () => {
+
+const CodeGenerator = () => {
     const [localMousePos, setLocalMousePos] = useState({});
     const [skills, setSkills] = useState(false);
+    const [code, setCode] = useState([])
+    const textareaRef = useRef(null);
+    
+
+    const copyToClipboard = () => {
+        if (textareaRef.current) {
+          textareaRef.current.select();
+          document.execCommand('copy');
+        }
+      };
 
     const handleMouseMove = (event) => {
         // 👇 Get mouse position relative to element
@@ -90,14 +102,30 @@ const PathRecord = () => {
 
     // Parse the coordinates entered in the text box
     const handleCoordinatesChange = (event) => {
-    setCoordinatesText(event.target.value);
+        setCoordinatesText(event.target.value);
     };
 
     // Function to split the coordinates text and update the coordinatesList state
     const updateCoordinatesList = () => {
-    const coords = coordinatesText.trim().split("\n");
-    setCoordinatesList(coords);
-    setCurrentCoordIndex(0);
+        const coords = coordinatesText.trim().split("\n");
+        setCoordinatesList(coords);
+        setCurrentCoordIndex(0);
+        console.log(coords)
+        var prev = [0, 0, 0]
+        const codeLines = coords.map((coord, i) => {
+            const [x, y, angle] = coord.split(",").map(item => item.trim());
+            var timeout = Math.round(Math.sqrt(Math.pow(x-prev[0], 2) + Math.pow(y-prev[1], 2)) * 1000/24 + 200); // 1000 / 24 is the speed of bot (time / inches)
+            if (timeout < 500) {
+                timeout = 500
+            }
+            prev = [x, y, angle]
+            if (i === 0) {
+              return `chassis.setPose(${x}, ${y}, ${angle});`;
+            }
+        
+            return `\nchassis.moveTo(${x}, ${y}, ${angle}, ${timeout});`;
+          });
+        setCode(codeLines)
     };
 
     // Function to handle forward and backward buttons to show next/previous coordinates
@@ -116,12 +144,23 @@ const PathRecord = () => {
         currentCoordIndex < coordinatesList.length ? parseInt(coordinatesList[currentCoordIndex].split(",")[0]) : 0,
         currentCoordIndex < coordinatesList.length ? parseInt(coordinatesList[currentCoordIndex].split(",")[1]) : 0
     )
+    
 
     return (  
-        <div>
-        <Navbar />
+    <div>
+        <PosTrackNavbar />
         <div className='skills'>
         <ToggleSwitch label="Skills: " onToggle={handleToggle}/>
+        </div>
+        <div className="coordinates-box">
+            <h2>Code:</h2>
+            <textarea
+                ref={textareaRef}
+                rows="5"
+                cols="30"
+                value={code.join("")}
+            />
+            <button onClick={copyToClipboard}>Copy to Clipboard</button>
         </div>
         <div className='stats'>
             <div>
@@ -178,11 +217,6 @@ const PathRecord = () => {
             </div>
         </div>
         <div className='container_main'>
-            {/* <form>
-            <label> Enter Coordinates:
-                <input type="test" />
-            </label>
-            </form> */}
             
             {<img src={imageToShow} className='field' alt="" onMouseMove={handleMouseMove}></img>}
             <br />
@@ -200,9 +234,10 @@ const PathRecord = () => {
                 rotation={currentCoordIndex < coordinatesList.length ? parseInt(coordinatesList[currentCoordIndex].split(",")[2]) : 0}
                 showText={showText}
             />
+            
         </div>
-        </div>
+    </div>
     );
 }
 
-export default PathRecord
+export default CodeGenerator

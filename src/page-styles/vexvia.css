@@ -53,3 +53,7 @@ li {
     cursor: not-allowed;
   }
   
+  .center-align {
+    margin: 0 auto; /* Center the container horizontally */
+    text-align: center;
+  }

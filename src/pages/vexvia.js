@@ -146,13 +146,13 @@ function Vexvia() {
       {loading ? (
             <div>LOADING DATA</div>
         ) : (
-      <ul>
+      <div className='center-align'>
           {paginatedData.map(event => (
             <li key={filteredData.id}>
               <EventDisplay name={event.name} location={event.location.city + ', ' + event.location.country} date={[event.start.slice(0,10), event.end.slice(0, 10)]} id={event.id}  />
               </li>
           ))} 
-      </ul>
+      </div>
       )}
     </div>
     

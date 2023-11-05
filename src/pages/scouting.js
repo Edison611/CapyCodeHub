@@ -39,7 +39,7 @@ function Scouting() {
       });
     }
 
-    const totalPages = 12; // should be 12 for full use
+    const totalPages = 40; // should be 12 for full use
 
     function fetchAllData() {
       const fetchPromises = [];

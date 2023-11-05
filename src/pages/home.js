@@ -1,61 +1,44 @@
 // HomePage.js
 import React from 'react';
+import logo from '../images/field.png'
 import "../page-styles/home.css"
-import { useNavigate } from 'react-router-dom';
+import "../styles/general.css"
+import "../styles/buttons.css"
+import Hero from '../components/HeroBg';
+import HeroLink from '../components/HeroLink';
+import field from '../images/field.png';
+import scouting from "../images/scouting.png"
 
 const Home = () => {
-  const navigate = useNavigate();
   return (
     <div>
-      <header>
-        <h1>Under Construction 🚧</h1>
-        <p>A website to help with programming for VEX Robotics. Made with help from ChatGPT</p>
-      </header>
+      <Hero image={logo} title={"Cabybaras (2055) Programming Website"} />
+    
       <main>
-      <section id="tracker" className="project-info">
-          <h2>Welcome to 2055's Programming Website!</h2>
-          <p>
-            This is a website that helps with programming for Vex Robotics Competitions (VRC)
-          </p>
+      <section className="project-info">
+          <div className='subheader'>Welcome to 2055's Programming Website!</div>
+          <div className='text'>
+            This is a website that helps with programming for Vex Robotics Competitions (VRC). Inspired by features on Lemlib to help users understand the precise placements of their robots on the field. 
+          </div>
+          <div className='text'>
+            It also includes an online replica of the Vex Via app, which is a scouting app that allows users to record data about other teams and events. No installations are required!
+          </div>
       </section>
 
-        <section className="hero">
-          <div className="hero-content">
-            <h2>Robot Position Tracker</h2>
-            <p>A webpage to help with figuring out the placement of robots</p>
-            <div className=''>
-                <button className="button-42" onClick={ () => navigate("/tracker")} >Robot Position</button>
-                <br />
-                <br />
-                <button className="button-42" onClick={ () => navigate("/path-record")} >Path Visualizer</button>
-            </div>
-          </div>
-        </section>
-        <br />
-
-        <section className="scouting">
-          <div className="scouting-content">
-            <h2>Scouting</h2>
-            <p>A webpage to help with scouting</p>
-            <div className=''>
-                <button className="button-42" onClick={ () => navigate("/scouting")} >Scouting</button>
-                <button className="button-42" onClick={ () => navigate("/vexvia")} >Vex Via</button>
-            </div>
-          </div>
-        </section>
+      <HeroLink image={field} title={"Robot Position Tracker"} text={"A webpage to help with figuring out the placement of robots"} buttons={[{name: "Robot Position Tracker", link: "/tracker"}, {name: "Path Visualizer", link: "/path-record"}, {name: "Code Generator", link: "/code-generator"}]} />
+      <br />
+      <HeroLink image={scouting} title={"Scouting"} text={"A webpage to help with scouting"} buttons={[{name: "Scouting", link: "/scouting"}, {name: "Vex Via", link: "/vexvia"}]} />
         
-
         <section className="contact">
-          <h2>Contact Us</h2>
-          <p>
-            Provide a way for users to get in touch with you. You can include a contact form, 
-            email address, or any other contact information you want to share.
-          </p>
+          <div className='subheader'>Contact Us</div>
+          <div className='text'>
+            Visit us at www.2055vrc.live or find us on our instagram @2055vrc. 
+          </div>
         </section>
       </main>
 
       <footer>
-        <p>&copy; {new Date().getFullYear()} Your Company. All rights reserved.</p>
+        <p>&copy; {new Date().getFullYear()} Mi3L Schools. All rights reserved. Made by Edison Ying</p>
       </footer>
     </div>
   );

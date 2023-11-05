@@ -1,11 +1,11 @@
 import React from "react";
-import "../page-styles/tracker.css";
+import "../../page-styles/postrack/tracker.css";
 import { useState, useEffect } from 'react';
-import field from '../images/field.png'
-import skills_field from '../images/skills-field.png'
-import ToggleSwitch from '../components/ToggleSwitch';
-import BotDrawer from '../components/BotDrawer'
-import Navbar from "../components/Navbar";
+import field from '../../images/field.png'
+import skills_field from '../../images/skills-field.png'
+import ToggleSwitch from '../../components/ToggleSwitch';
+import BotDrawer from '../../components/BotDrawer'
+import PosTrackNavbar from "../../components/PosTrackNavbar";
 
 const Tracker = () => {
     const [localMousePos, setLocalMousePos] = useState({});
@@ -104,7 +104,7 @@ const Tracker = () => {
 
     return (  
         <div>
-        <Navbar />
+        <PosTrackNavbar />
         <div className='skills'>
         <ToggleSwitch label="Skills: " onToggle={handleToggle}/>
         </div>

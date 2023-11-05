@@ -17,16 +17,15 @@ header {
   main {
     padding: 2%;
   }
-  
+/*   
   .hero {
-    position: relative; /* Ensure relative positioning for the pseudo-element */
+    position: relative; 
     height: 400px;
     display: flex;
     align-items: center;
     justify-content: center;
   }
   
-  /* Pseudo-element for the background image with opacity */
   .hero::before {
     content: '';
     position: absolute;
@@ -37,13 +36,13 @@ header {
     background-image: url('../images/field.png');
     background-size: cover;
     background-position: center;
-    opacity: 0.4; /* Set the desired opacity for the background image */
+    opacity: 0.4; 
   }
   
   .hero-content {
     text-align: center;
-    position: relative; /* Ensure the hero content is above the pseudo-element */
-    z-index: 1; /* Make sure the content is displayed above the pseudo-element */
+    position: relative; 
+    z-index: 1; 
   }
   .hero h2 {
     font-size: 36px;
@@ -53,7 +52,7 @@ header {
   .hero p {
     font-size: 18px;
     margin: 10px 0;
-  }
+  } */
 
   .scouting {
     position: relative; /* Ensure relative positioning for the pseudo-element */

@@ -1,0 +1,29 @@
+/* PosTrackNavbar.css */
+/* ... Your existing CSS ... */
+
+.coordinates-box {
+  position: absolute;
+  bottom: 10%;
+  right: 2%;
+  width: 22vw; /* Adjust the width as needed */
+  background-color: #333; /* Set the background color for the coordinates box */
+  color: white;
+  padding-left: 20px;
+  padding-right: 20px;
+  padding-bottom: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.coordinates-box h2 {
+  font-size: 20px;
+}
+
+.coordinates-box p {
+  font-size: 16px;
+  white-space: pre-line; /* Preserve line breaks in the text */
+}
+
+/* Add additional styling as needed */

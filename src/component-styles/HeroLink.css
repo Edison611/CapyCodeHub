@@ -1,0 +1,66 @@
+@import url('https://fonts.cdnfonts.com/css/quicksand');
+
+.hero-bg {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  overflow: hidden;
+  position: relative; /* Added to establish a positioning context */
+}
+
+.background::before {
+    background: rgba(0, 0, 0, 0.5); /* Adjust the last value (0.5) for the desired opacity */
+  }
+
+.background {
+  position: relative;
+  text-align: center;
+  width: 100%;
+  height: 100vh;
+  overflow: hidden;
+}
+
+.background-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: grayscale(0%);
+  opacity: 0.5;
+}
+
+.herolink-content {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -75%);
+  text-align: center;
+  color: white;
+  background-color: black;
+  padding: 3%;
+  border-radius: 10px;
+  width: 50%;
+  opacity: 1;
+  z-index: 1; /* Added to place the content above buttons */
+}
+
+.title {
+  font-size: 5rem;
+  margin-top: 0;
+  font-family: 'Quicksand Book', sans-serif;
+  font-weight: normal;
+}
+
+.button-container {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column; /* Display buttons in a column */
+  z-index: 2; /* Ensure the buttons are above the content */
+  margin-top: 10%;
+  
+}
+
