@@ -12,7 +12,7 @@ import scouting from "../images/scouting.png"
 const Home = () => {
   return (
     <div>
-      <Hero image={logo} title={"Cabybaras (2055) Programming Website"} />
+      <Hero image={logo} title={"Capybaras (2055) Programming Website"} />
     
       <main>
       <section className="project-info">

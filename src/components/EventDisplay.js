@@ -26,7 +26,7 @@ const EventDisplay = ({ name, location, date, id }) => {
       return response.json();
     })
     .then(data => {
-      const eventDetailsPath = `/vexvia/${id}`
+      const eventDetailsPath = `/vexvia/comps/${id}`
       navigate(eventDetailsPath)
       setLoading(false)
 

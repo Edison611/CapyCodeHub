@@ -10,6 +10,8 @@ import Matches from './pages/vexvia/matches'
 import Skills from './pages/vexvia/skills'
 import CodeGenerator from './pages/postrack/codeGenerator'
 import Awards from './pages/vexvia/Awards'
+import TeamHome from './pages/teams/TeamHome.js'
+import TeamCompetition from './pages/teams/TeamCompetition.js'
 
 function App() {
   return (
@@ -21,10 +23,12 @@ function App() {
         <Route path="/code-generator" element={<CodeGenerator />} />
         <Route path="/scouting" element={<Scouting />} />
         <Route path="/vexvia" element={<Vexvia />} />
-        <Route path="/vexvia/:event_id" element={<EventHome />} />
-        <Route path="/vexvia/:event_id/skills" element={<Skills />} />
-        <Route path="/vexvia/:event_id/division/:division_id/matches" element={<Matches />} />
-        <Route path="/vexvia/:event_id/awards" element={<Awards />} />
+        <Route path="/vexvia/comps/:event_id" element={<EventHome />} />
+        <Route path="/vexvia/comps/:event_id/skills" element={<Skills />} />
+        <Route path="/vexvia/comps/:event_id/division/:division_id/matches" element={<Matches />} />
+        <Route path="/vexvia/comps/:event_id/awards" element={<Awards />} />
+        <Route path="/vexvia/teams/:team_id/" element={<TeamHome />} />
+        <Route path="/vexvia/teams/:team_id/:event_id" element={<TeamCompetition/>} />
       </Routes>
     </div>
   )

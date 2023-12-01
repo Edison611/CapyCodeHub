@@ -41,17 +41,17 @@ const EventHome = () => {
   }, [event_id]);
 
   function goToDivision(id) {
-    const path = `/vexvia/${event_id}/division/${id}/matches`
+    const path = `/vexvia/comps/${event_id}/division/${id}/matches`
     navigate(path)
   }
 
   function goToSkills() {
-    const path = `/vexvia/${event_id}/skills`
+    const path = `/vexvia/comps/${event_id}/skills`
     navigate(path)
   }
 
   function goToAwards() {
-    const path = `/vexvia/${event_id}/awards`
+    const path = `/vexvia/comps/${event_id}/awards`
     navigate(path)
   }
 
