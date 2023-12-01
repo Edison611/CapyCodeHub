@@ -1,12 +1,15 @@
 import React, { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import DivisionNavbar from "./DivisionNavbar";
 import "../../page-styles/vexvia/matches.css"
 import DropdownMenuComponent from "./Dropdown";
 
-const Display = ({ number, name, ranking, wp, ap, sp, wins, losses, ties }) => {
+const Display = ({ number, name, ranking, wp, ap, sp, wins, losses, ties, id }) => {
+  const { event_id } = useParams();
+  const navigate = useNavigate();
+  console.log(id)
     return (
-      <div className="display">
+      <div className="display" onClick={() => navigate(`/vexvia/teams/${id}/${event_id}`)}>
         <div className="display-row">
           <div className="display-item">{number}</div>
           <div className="display-item">{name}</div>
@@ -44,6 +47,7 @@ const Display = ({ number, name, ranking, wp, ap, sp, wins, losses, ties }) => {
 
 
 const Matches = () => {
+  const navigate = useNavigate();
   const { event_id } = useParams();
   const { division_id } = useParams();
   const [activePage, setActivePage] = useState("schedule"); // Default active page
@@ -156,7 +160,7 @@ const Matches = () => {
                 {rankingsData.map(team => (
                     <li key={team.id}>
                         <Display number={team.team.name} name={teamsMap[team.team.name].name} ranking={team.rank} wp={team.wp} ap={team.ap} 
-                        sp={team.sp} wins={team.wins} losses={team.losses} ties={team.ties} />
+                        sp={team.sp} wins={team.wins} losses={team.losses} ties={team.ties} id={team.team.id} />
                     </li>
                 ))} 
             </div>

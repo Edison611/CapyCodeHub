@@ -1,57 +1,9 @@
 import React, { useState } from 'react';
 import '../../page-styles/vexvia/Dropdown.css'
-
-const MatchDisplay = ({ matchnum, red1, red2, redscore, blue1, blue2, bluescore, field, time }) => {
-  const redWins = redscore > bluescore;
-  const blueWins = bluescore > redscore;
-
-  return (
-    <div className="match-display">
-      <div className="match-column">
-        <strong>{matchnum}</strong>
-      </div>
-      <div className={`match-column red-column`}>
-        <div className="team-name">
-          {red1}
-          <br />
-          {red2}
-        </div>
-      </div>
-      <div className={`match-column red-column ${redWins ? 'winner' : ''}`}>
-        <div className="score-container">
-          <strong>
-          {redWins && <span className="crown">👑</span>}
-          {redscore}
-          </strong>
-        </div>
-      </div>
-      <div className='match-column'>
-        <div>{field}</div>
-        <div>{time}</div>
-      </div>
-      <div className={`match-column blue-column ${blueWins ? 'winner' : ''}`}>
-        <div className="score-container">
-          <strong>
-          {bluescore}
-          {blueWins && <span className="crown">👑</span>}
-          </strong>
-        </div>
-      </div>
-      <div className={`match-column blue-column`}>
-        <div className="team-name">
-          {blue1}
-          <br />
-          {blue2}
-        </div>
-      </div>
-    </div>
-  );
-};
+import MatchDisplay from '../../components/MatchDisplay';
 
 
 const ScheduleDisplay = ({ data }) => {
-  // console.log(data)
-
   return (
     <div className='box'>
       <div className='match-container'>
