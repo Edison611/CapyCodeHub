@@ -4,7 +4,8 @@ import '../../page-styles/teams/TeamHome.css'
 import { useNavigate } from 'react-router-dom';
 import MatchDisplay from '../../components/MatchDisplay';
 import { firestore } from '../../firebase';
-import { doc, setDoc, getDocs, query, collection, where } from 'firebase/firestore';
+import ScoutingTeamsDisplay from '../../components/ScoutingTeamsDisplay';
+import { getDocs, query, collection, where } from 'firebase/firestore';
 
 const TeamCompetition = () => {
 
@@ -13,6 +14,9 @@ const TeamCompetition = () => {
   const [matchData, setMatchData] = useState([]);
   const [teamData, setTeamData] = useState(null); 
   const [skillsData, setSkillsData] = useState(null);
+  const [watchData, setWatchData] = useState(null); 
+  const [alliances, setAlliances] = useState(null);
+  const [opponents, setOpponents] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
@@ -76,8 +80,8 @@ const TeamCompetition = () => {
     if (matchData) {
       let all = []
       let all_id = []
-      let alliances = {}
-      let opponents = {}
+      let alliances = []
+      let opponents = []
       for (let i = 0; i < matchData.length; i++) {
         const match = matchData[i];
 
@@ -85,18 +89,19 @@ const TeamCompetition = () => {
           for (let k = 0; k < 2; k++) {
             if (match.alliances[j].teams[k].team.id === parseInt(team_id)) {
               if (j === 0) {
-                opponents[match.alliances[1].teams[0].team.id] = (match.alliances[1].teams[0].team.name)
-                opponents[match.alliances[1].teams[1].team.id] = (match.alliances[1].teams[1].team.name)
+                opponents.push({ "id" : match.alliances[1].teams[0].team.id, "name" : match.alliances[1].teams[0].team.name, "matchnum" : match.matchnum})
+                opponents.push({ "id" : match.alliances[1].teams[1].team.id, "name" : match.alliances[1].teams[1].team.name, "matchnum" : match.matchnum})
               }
               else if (j === 1) {
-                opponents[match.alliances[0].teams[0].team.id] = (match.alliances[0].teams[0].team.name)
-                opponents[match.alliances[0].teams[1].team.id] = (match.alliances[0].teams[1].team.name)
+                opponents.push({ "id" : match.alliances[0].teams[0].team.id, "name" : match.alliances[0].teams[0].team.name, "matchnum" : match.matchnum})
+                opponents.push({ "id" : match.alliances[0].teams[1].team.id, "name" : match.alliances[0].teams[1].team.name, "matchnum" : match.matchnum})
+               
               }
               if (k === 0) {
-                alliances[match.alliances[j].teams[k+1].team.id] = (match.alliances[j].teams[k+1].team.name)
+                alliances.push({"id" : match.alliances[j].teams[k+1].team.id, "name" :  match.alliances[j].teams[k+1].team.name, "matchnum" : match.matchnum})
               }
               else if (k === 1) {
-                alliances[match.alliances[j].teams[k-1].team.id] = (match.alliances[j].teams[k-1].team.name)
+                alliances.push({"id" : match.alliances[j].teams[k-1].team.id, "name" :  match.alliances[j].teams[k-1].team.name, "matchnum" : match.matchnum})
               }
             }
             all.push(match.alliances[j].teams[k].team.name)
@@ -104,19 +109,41 @@ const TeamCompetition = () => {
           }
         }
       }
-
-      console.log(all)
+      setAlliances(alliances)
+      setOpponents(opponents)
       console.log(alliances)
-      console.log(opponents)
 
       let filter = ""
       for (let i = 0; i < all_id.length; i++) {
         filter += `team%5B%5D=${all_id[i]}&`
       }
-      console.log(filter)
       
-      // const apiUrl = `https://www.robotevents.com/api/v2/events/${event_id}/divisions/1/matches?${filter}`;
-      
+      const apiUrl = `https://www.robotevents.com/api/v2/events/${event_id}/divisions/1/matches?${filter}per_page=300`;
+
+      fetch(`${apiUrl}`, {
+        headers: {
+          Authorization: `Bearer ${accessToken}`
+        }
+      })
+        .then(response => response.json())
+        .then(data => {
+          let unique = [];
+          let ids = [];
+          data.data.forEach((match) => {
+            if (ids.includes(match.id)) {
+              return;
+            }
+            
+            unique.push(match);
+            ids.push(match.id)
+          })
+          setWatchData(unique);
+          setLoading(false);
+        })
+        .catch(error => {
+          setError(error);
+          setLoading(false);
+        });
     }
     
   }, [matchData])
@@ -129,12 +156,14 @@ const TeamCompetition = () => {
   // if (error) {
   //   return <div>An error occurred: {error.message}</div>;
   // }
-  console.log(matchData)
-  console.log(skillsData)
+  // console.log(matchData)
+  // console.log(skillsData)
+  // console.log("watchData:", watchData)
+  // console.log("alliances", alliances)
 
   return (
   <div>
-    {teamData && <h1>{teamData.team_name} {team_id} {event_id}</h1>}
+    {teamData && <h1>{teamData.team_name}</h1>}
     <div className='match-container'>
         {matchData && matchData.map((match) => (
             <MatchDisplay 
@@ -148,7 +177,28 @@ const TeamCompetition = () => {
                 bluescore={match.alliances[0].score}
                 field={match.field}
                 time={match.name[0] === 'Q' && match.name[1] === "u" ? match.scheduled.slice(11, 16): ""}
-                team=""
+                // team={teamData.number}
+            />
+        ))}
+      </div>
+    {alliances && opponents && <ScoutingTeamsDisplay alliances={alliances} opponents={opponents} />}
+    <div className='subtitle'>Games to Watch:</div>
+    <div className='match-container'>
+        {watchData && watchData.map((match) => (
+            <MatchDisplay 
+                // key={match.id}
+                matchnum={match.name}
+                red1={match.alliances[1].teams[0].team.name}
+                red2={match.alliances[1].teams[1].team.name}
+                redscore={match.alliances[1].score}
+                blue1={match.alliances[0].teams[0].team.name}
+                blue2={match.alliances[0].teams[1].team.name}
+                bluescore={match.alliances[0].score}
+                field={match.field}
+                time={match.name[0] === 'Q' && match.name[1] === "u" ? match.scheduled.slice(11, 16): ""}
+                // team={teamData.number}
+                alliances={alliances}
+                opponents={opponents}
             />
         ))}
       </div>
