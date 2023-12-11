@@ -1,0 +1,19 @@
+/* MatchList.css */
+
+.scouting-team-container {
+    display: flex;
+    justify-content: space-around;
+    margin-top: 20px;
+  }
+  
+  .scouting-team-column {
+    flex: 1;
+    margin: 0 10px;
+  }
+  
+  .scouting-team-item {
+    border: 1px solid #ddd;
+    padding: 10px;
+    margin-bottom: 10px;
+  }
+  

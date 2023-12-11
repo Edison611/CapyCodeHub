@@ -32,19 +32,15 @@
 }
 
 .team-name {
-  display: flex;
+  /* display: flex; Uncomment this line */
   align-items: center;
   justify-content: center;
   margin: 2px;
   font-size: 2vw;
-  position: relative;
 }
 
 .team-name u {
   text-decoration: underline;
-  position: absolute;
-  bottom: 0;
-  left: 0;
 }
 
 .team-divider {
@@ -62,44 +58,3 @@
 .blue-column {
   color: #3071a9; /* Blue color for team names and scores */
 }
-
-  
-  
-    /* ScheduleDisplay.css */
-  .schedule-list {
-      margin-top: 20px;
-    }
-  
-  .dropdown-container {
-    text-align: center; /* Center the contents horizontally */
-    margin: 10px;
-  }
-    
-  
-  .dropdown-header button {
-    background-color: #d84040; /* Red background color */
-    align-items: center;
-    color: white;
-    border: none;
-    padding: 8px 0; /* Adjust padding for button height */
-    font-size: 16px;
-    font-weight: bold;
-    cursor: pointer;
-    width: 90vw; /* Button spans 80% of view width */
-    font-size: 2vw;
-    padding: 2%;
-    position: relative;
-  }
-  
-  .dropdown-button .arrow-icon {
-    position: absolute;
-    right: 8px; /* Adjust the positioning of the arrow */
-    font-size: 2vw;
-  
-  }
-  
-  .dropdown-button.open {
-    background-color: #b32525; /* Slightly darker red when dropdown is open */
-  }
-  /* Add more styling as needed */
-  

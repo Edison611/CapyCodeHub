@@ -7,7 +7,7 @@ import DropdownMenuComponent from "./Dropdown";
 const Display = ({ number, name, ranking, wp, ap, sp, wins, losses, ties, id }) => {
   const { event_id } = useParams();
   const navigate = useNavigate();
-  console.log(id)
+  // console.log(id)
     return (
       <div className="display" onClick={() => navigate(`/vexvia/teams/${id}/${event_id}`)}>
         <div className="display-row">
@@ -23,9 +23,11 @@ const Display = ({ number, name, ranking, wp, ap, sp, wins, losses, ties, id }) 
   };
 
 
-  const TeamsDisplay = ({ number, name, location, ranking, wins, losses, ties, wp, ap, sp }) => {
+  const TeamsDisplay = ({ number, name, location, ranking, wins, losses, ties, id, wp, ap, sp }) => {
+    const { event_id } = useParams();
+    const navigate = useNavigate();
     return (
-      <div className="display">
+      <div className="display" onClick={() => navigate(`/vexvia/teams/${id}/${event_id}`)}>
         <div className="teams-table">
           <div className="column">
             <div className="num">{number}</div>
@@ -174,7 +176,7 @@ const Matches = () => {
                     <li key={team.id}>
                         <TeamsDisplay number={team.number} name={team.team_name} location={teamsMap[team.number].location} ranking={teamsMap[team.number].rank} 
                         wp={teamsMap[team.number].wp} ap={teamsMap[team.number].ap} sp={teamsMap[team.number].sp} 
-                        wins={teamsMap[team.number].wins} losses={teamsMap[team.number].losses} ties={teamsMap[team.number].ties} />
+                        wins={teamsMap[team.number].wins} losses={teamsMap[team.number].losses} ties={teamsMap[team.number].ties} id={team.id} />
                     </li>
                 ))} 
             </div>
