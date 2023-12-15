@@ -111,7 +111,7 @@ const TeamCompetition = () => {
       }
       setAlliances(alliances)
       setOpponents(opponents)
-      console.log(alliances)
+      console.log(opponents)
 
       let filter = ""
       for (let i = 0; i < all_id.length; i++) {
@@ -136,8 +136,50 @@ const TeamCompetition = () => {
             
             unique.push(match);
             ids.push(match.id)
+      
           })
-          setWatchData(unique);
+          const filteredUnique = unique.filter((match) => {
+            let opFlag = false
+            for (const opponent of opponents) {
+              if (opponent.id === match.alliances[0].teams[0].team.id && opponent.matchnum > match.matchnum) {
+                // console.log(match.matchnum)
+                opFlag = true;
+              }
+              if (opponent.id === match.alliances[0].teams[1].team.id && opponent.matchnum > match.matchnum) {
+                opFlag = true;
+              }
+              if (opponent.id === match.alliances[1].teams[0].team.id && opponent.matchnum > match.matchnum) {
+                opFlag = true;
+              }
+              if (opponent.id === match.alliances[1].teams[1].team.id && opponent.matchnum > match.matchnum) {
+                opFlag = true;
+              }
+            }
+
+            let alFlag = false
+
+            for (const opponent of alliances) {
+              if (opponent.id === match.alliances[0].teams[0].team.id && opponent.matchnum > match.matchnum) {
+                console.log(match.matchnum)
+                alFlag = true
+              }
+              if (opponent.id === match.alliances[0].teams[1].team.id && opponent.matchnum > match.matchnum) {
+                alFlag = true
+              }
+              if (opponent.id === match.alliances[1].teams[0].team.id && opponent.matchnum > match.matchnum) {
+                alFlag = true
+              }
+              if (opponent.id === match.alliances[1].teams[1].team.id && opponent.matchnum > match.matchnum) {
+                alFlag = true
+              }
+            }
+
+            if (opFlag || alFlag) {
+              return true;
+            }
+          });
+
+          setWatchData(filteredUnique);
           setLoading(false);
         })
         .catch(error => {
@@ -148,7 +190,7 @@ const TeamCompetition = () => {
     
   }, [matchData])
 
-
+  console.log(watchData)
   // if (loading) {
   //   return <div>Loading...</div>;
   // }
