@@ -61,10 +61,10 @@ const PathRecord = () => {
         window.removeEventListener('resize', handleWindowResize);
         };
     }, []);
-
+        // ----------------------------
     // Add the width and height states for the square
-    const [squareWidth, setSquareWidth] = useState(10);
-    const [squareHeight, setSquareHeight] = useState(12);
+    const [squareWidth, setSquareWidth] = useState(12);
+    const [squareHeight, setSquareHeight] = useState(14);
 
     const handleSquareWidthChange = (event) => {
         setSquareWidth(parseInt(event.target.value));
@@ -73,6 +73,16 @@ const PathRecord = () => {
     const handleSquareHeightChange = (event) => {
         setSquareHeight(parseInt(event.target.value));
     };
+    // ----------------------------
+    // Time Stats
+    const [timeInterval, setTimeInterval] = useState(0.05);
+    const [time, setTime] = useState(0.000);
+
+    const handleTimeIntervalChange = (event) => {
+        setTimeInterval(parseInt(event.target.value));
+    };
+    // ----------------------------
+
     var position = mouseToCoord(localMousePos.x, localMousePos.y)
     var botSize = valToSize(squareWidth, squareHeight);
 
@@ -90,7 +100,7 @@ const PathRecord = () => {
 
     // Parse the coordinates entered in the text box
     const handleCoordinatesChange = (event) => {
-    setCoordinatesText(event.target.value);
+        setCoordinatesText(event.target.value)
     };
 
     // Function to split the coordinates text and update the coordinatesList state
@@ -98,17 +108,20 @@ const PathRecord = () => {
     const coords = coordinatesText.trim().split("\n");
     setCoordinatesList(coords);
     setCurrentCoordIndex(0);
+    setTime(0.000);
     };
 
     // Function to handle forward and backward buttons to show next/previous coordinates
     const handleNextCoordinate = () => {
-    setCurrentCoordIndex((prevIndex) =>
-        prevIndex < coordinatesList.length - 1 ? prevIndex + 1 : prevIndex
-    );
+        setTime(parseFloat(time + timeInterval).toFixed(3))
+        setCurrentCoordIndex((prevIndex) =>
+            prevIndex < coordinatesList.length - 1 ? prevIndex + 1 : prevIndex
+        );
     };
 
     const handlePreviousCoordinate = () => {
-    setCurrentCoordIndex((prevIndex) => (prevIndex > 0 ? prevIndex - 1 : prevIndex));
+        setTime(parseFloat(time - timeInterval).toFixed(3) >= 0 ? parseFloat(time - timeInterval).toFixed(3) : 0.000)
+        setCurrentCoordIndex((prevIndex) => (prevIndex > 0 ? prevIndex - 1 : prevIndex));
     };
 
 
@@ -143,6 +156,16 @@ const PathRecord = () => {
                     id="squareHeight"
                     value={squareHeight}
                     onChange={handleSquareHeightChange}
+                />
+            </div>
+            <div>
+                <label>Time Interval: </label>
+                <input
+                    className="botStats"
+                    type="number"
+                    id=""
+                    value={timeInterval}
+                    onChange={handleTimeIntervalChange}
                 />
             </div>
            
@@ -190,6 +213,10 @@ const PathRecord = () => {
             Position:
             <b>
                 ({position})
+            </b>
+            , Time:
+            <b>
+                {time}s
             </b>
             </div>
             <BotDrawer

@@ -5,8 +5,6 @@ import '../page-styles/scouting.css'
 import { useNavigate } from "react-router-dom";
 import logo from "../images/logo.png"
 import LoadingPage from '../components/Loading';
-import { firestore } from '../firebase';
-import { doc, setDoc, getDocs, collection, query, where, or } from 'firebase/firestore';
 
 function Scouting() {
   const navigate = useNavigate();
@@ -20,116 +18,48 @@ function Scouting() {
   const accessToken = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiIzIiwianRpIjoiMGJmMTdkZmIxZWRjMmRlZGQ5MjhmM2ZkODEzZDNkNWM1ZjNjOGU3OTUwY2JhYTIzODA5YzIwNzM3OGE4ZmFjZTZiMGIyODdlMjdmODM4NjIiLCJpYXQiOjE2OTE5ODQ4MDMuMDAyNTA3OSwibmJmIjoxNjkxOTg0ODAzLjAwMjUxMSwiZXhwIjoyNjM4NzU5NjAyLjk5NzEyOTksInN1YiI6IjExNzQzOSIsInNjb3BlcyI6W119.opzagy4WRMMhh3LQQhk0Fp-2NGo37AushuMGtU4cS6VwkxhsL-YdEzq18x1ocXLxj_Ip_1J41dL3NaVgCDUkrHZRA2eR-taKXKh7OZo3W-s9PJJjGKb4RyolAIPUWiQzQKdzbbKsvXoqdFAK8zfiEE_jjMIww9eXEEzd_COI2FtIp4BBgR84ss_RsuLWcT9r0OjW810iZTBzep96KwJPQDatq6RXTMIpc04HZcYUJah1l4hAjQlpReER4CKQ7w5IdPXzdOS1He-eToEwpIKTPXKoxnAcnwdOQWiJj3RAXFf9lVM5n9s7K-OdSMTBS3LKDlzxfJHAYQwC0Wpdr4LnMol4LcyZksyVXu-bb-vxxYeYm88ziIsLeCef0l9qHf_D46_jfln2e8cpaK88VBkKQmQO3gI8PB-QY4h0hGWwO3-WLV2vR_8TwwAoaw9Hds02NCKNNRzMI7ShqRyonjcTn5O1t2BwSrwnOVDTUGYf5EFWIjEbGB8B-xuqfCFqtq9u8kzeFqszgAUzdYOomsdjB35U5mWP7shOm4HRUm5I6OEmUTu5NZnRHLP8vZpIdS1_81WT2wCdyB6qxfIn3SuJk44EklLPzN4H6KkVH74j6J5d8CkB--NY74WyQVHapmGo4Dr9siIjg4am6w2nqYjbi3zVGxSk_aBYM5PoMDHnATY';
 
   // Fetches team data
-  // useEffect(() => {
-  //   const apiUrl = 'https://www.robotevents.com/api/v2/teams';
+  useEffect(() => {
+    const apiUrl = 'https://www.robotevents.com/api/v2/teams';
 
-  //   function fetchDataForPage(page){
+    function fetchDataForPage(page){
 
-  //     fetch(`${apiUrl}?page=${page}&per_page=250?registered=true&program%5B%5D=1&grade%5B%5D=High%20School&grade%5B%5D=Middle%20School&myTeams=false`, {
-  //       headers: {
-  //         Authorization: `Bearer ${accessToken}`
-  //       }
-  //     })
-  //     .then(response => {
-  //       return response.json();
-  //     })
-  //     .then(data => {
-  //       data.data.forEach((team) => {
-  //         const docRef = doc(firestore, "teams", team.id.toString())
-  //         setDoc(docRef, {
-  //           team_name: team.team_name,
-  //           number: team.number,
-  //           id: team.id,
-  //           location: team.location,
-  //           grade: team.grade,
-  //           organisation: team.organization
-  //         });
-  //       })
-  //       console.log("done a page")
-  //       setTeams(prevData => [...prevData, ...data.data])
-  //     })
-  //     .catch(error => {
-  //       setError(error);
-  //       setLoading(false);
-  //     });
-  //   }
+      fetch(`${apiUrl}?page=${page}&per_page=250?registered=true&program%5B%5D=1&grade%5B%5D=High%20School&grade%5B%5D=Middle%20School&myTeams=false`, {
+        headers: {
+          Authorization: `Bearer ${accessToken}`
+        }
+      })
+      .then(response => {
+        return response.json();
+      })
+      .then(data => {
 
-  //   const totalPages = 50; // should be 50 for full use (12-13k teams)
+      })
+      .catch(error => {
+        setError(error);
+        setLoading(false);
+      });
+    }
 
-  //   function fetchAllData() {
-  //     const fetchPromises = [];
-  //     for (let page = 1; page <= totalPages; page++) {
-  //       fetchPromises.push(fetchDataForPage(page));
-  //     }
-  //     Promise.all(fetchPromises)
-  //       .then(() => {
-  //         console.log('All data retrieved');
+    const totalPages = 50; // should be 50 for full use (12-13k teams)
+
+    function fetchAllData() {
+      const fetchPromises = [];
+      for (let page = 1; page <= totalPages; page++) {
+        fetchPromises.push(fetchDataForPage(page));
+      }
+      Promise.all(fetchPromises)
+        .then(() => {
+          console.log('All data retrieved');
           
-  //       });
-  //   }
+        });
+    }
 
-  //   fetchAllData();
-  //   setLoading(false);
+    fetchAllData();
+    setLoading(false);
 
     
-  // }, [accessToken]);
+  }, [inputText]);
 
-  // useEffect(() => {
-  //   const addInfo = () => {
-  //     if (teams) {
-  //       try {
-  //         teams.forEach((team) => {
-  //         const docRef = doc(firestore, "teams", team.id.toString())
-  //         setDoc(docRef, {
-  //           team_name: team.team_name,
-  //           number: team.number,
-  //           id: team.id,
-  //           location: team.location,
-  //           grade: team.grade,
-  //           organisation: team.organization
-  //         });
-  //       })
-  //       console.log("done adding data")
-  //     }
-  //     catch (e) {
-  //       console.log("Error adding data: ", e)
-  //     }
-  //     }
-  //   }
-      
-  //  addInfo();
-   
-  // }, [teams, loading])
-
-  useEffect(() => {
-    const fetchTeams = async () => {
-      if (inputText === '') {
-        return;
-      }
-      setLoading(true);
-      const teamsRef = collection(firestore, "teams");
-      
-      const querySnapshot = await getDocs(
-        query(teamsRef)
-          // query(teamsRef, or( (where("number", "in", [inputText]), where("team_name", "in", [inputText]))))
-        );
-      
-      // console.log(querySnapshot)
-      const info = []
-      querySnapshot.forEach((doc) => {
-        // console.log(doc.id, " => ", doc.data())
-          info.push(doc.data());
-      });
-      console.log("data: ",info.length)
-      // const teamsData = teamsSnap.data();
-
-      setTeams(info);
-      setLoading(false);
-    }
-    fetchTeams();
-  }, [inputText])
-
-  console.log(teams)
 
   // const filteredData = teams
   const filteredData = (teams.filter((el) => {
@@ -218,6 +148,7 @@ function Scouting() {
           Next
       </button>
       </div>
+      PAGE UNDER REVAMPS
       {loading ? (
             <LoadingPage />
         ) : (
@@ -229,6 +160,7 @@ function Scouting() {
           ))} 
       </ul>
       )}
+
     </div>
     
   );
