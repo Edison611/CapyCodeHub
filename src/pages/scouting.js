@@ -19,11 +19,11 @@ function Scouting() {
 
   // Fetches team data
   useEffect(() => {
-    const apiUrl = 'https://www.robotevents.com/api/v2/teams';
+    const apiUrl = `https://www.robotevents.com/api/v2/teams?number%5B%5D=${inputText}&program%5B%5D=1&myTeams=false`;
 
-    function fetchDataForPage(page){
+    try {
 
-      fetch(`${apiUrl}?page=${page}&per_page=250?registered=true&program%5B%5D=1&grade%5B%5D=High%20School&grade%5B%5D=Middle%20School&myTeams=false`, {
+      fetch(`${apiUrl}`, {
         headers: {
           Authorization: `Bearer ${accessToken}`
         }
@@ -32,50 +32,41 @@ function Scouting() {
         return response.json();
       })
       .then(data => {
-
+        console.log(data.data)
+        setTeams([data.data]);
       })
       .catch(error => {
         setError(error);
         setLoading(false);
       });
     }
-
-    const totalPages = 50; // should be 50 for full use (12-13k teams)
-
-    function fetchAllData() {
-      const fetchPromises = [];
-      for (let page = 1; page <= totalPages; page++) {
-        fetchPromises.push(fetchDataForPage(page));
-      }
-      Promise.all(fetchPromises)
-        .then(() => {
-          console.log('All data retrieved');
-          
-        });
+    
+    catch (error) {
+      setError(error);
+      setLoading(false);
     }
 
-    fetchAllData();
     setLoading(false);
 
     
   }, [inputText]);
 
+  const filteredData = teams
 
-  // const filteredData = teams
-  const filteredData = (teams.filter((el) => {
-    //if no input the return the original
-    if (inputText === '') {
-        return el;
-    }
-    //return the item which contains the user input
-    else {
-       if (el.number === null || el.team_name === null) {
-         return null
-       }
-      // console.log(el.number.toLowerCase() + el.team_name.toLowerCase())
-        return (el.number.toLowerCase() + el.team_name.toLowerCase()).includes(inputText)
-    }
-    }))
+  // const filteredData = (teams.filter((el) => {
+  //   //if no input the return the original
+  //   if (inputText === '') {
+  //       return el;
+  //   }
+  //   //return the item which contains the user input
+  //   else {
+  //      if (el.number === null || el.team_name === null) {
+  //        return null
+  //      }
+  //     // console.log(el.number.toLowerCase() + el.team_name.toLowerCase())
+  //       return (el.number.toUpperCase() + el.team_name.toUpperCase()).includes(inputText)
+  //   }
+  //   }))
 
   const [currentPage, setCurrentPage] = useState(1);
 
@@ -92,7 +83,7 @@ function Scouting() {
   
   // Handles when the search bar changes
   const handleSearchChange = (e) => {
-    setInputText(e.target.value.toLowerCase());
+    setInputText(e.target.value);
     setCurrentPage(1); // Reset current page when searching
   };
 
@@ -101,6 +92,35 @@ function Scouting() {
       setCurrentPage(newPage);
     }
   };
+
+  const handleKeyPress = (e) => {
+    if (e.key === 'Enter') {
+      const apiUrl = `https://www.robotevents.com/api/v2/teams?number%5B%5D=${inputText}&program%5B%5D=1&myTeams=false`;
+
+    try {
+      fetch(`${apiUrl}`, {
+        headers: {
+          Authorization: `Bearer ${accessToken}`
+        }
+      })
+      .then(response => {
+        return response.json();
+      })
+      .then(data => {
+        navigate(`/vexvia/teams/${data.data[0].id}`)
+      })
+      .catch(error => {
+        setError(error);
+        setLoading(false);
+      });
+    }
+    
+    catch (error) {
+      setError(error);
+      setLoading(false);
+    }
+    }
+  }
 
   console.log(teams)
   // if (teams.length === 0) {
@@ -116,51 +136,14 @@ function Scouting() {
         <TextField
           id="outlined-basic"
           onChange={handleSearchChange}
+          onKeyDown={handleKeyPress}
           variant="outlined"
           fullWidth
           label="Search for teams"
           value={inputText} // Bind the input value to the state
         />
       </div>
-      <div className="pagination">
-        <button onClick={() => handlePageChange(currentPage - 1)} disabled={currentPage === 1}>
-          Previous
-        </button>
-      <div className="page-numbers">
-        {Array.from({ length: 3 }, (_, index) => {
-            const pageToShow = currentPage + index - 1;
-            if (pageToShow >= 1 && pageToShow <= pageCount) {
-              return (
-                <button
-                  key={pageToShow}
-                  onClick={() => handlePageChange(pageToShow)}
-                  className={currentPage === pageToShow ? "active" : ""}
-                >
-                  {pageToShow}
-                </button>
-              );
-            } else {
-              return null;
-          }
-        })}
-      </div>
-      <button onClick={() => handlePageChange(currentPage + 1)} disabled={currentPage === pageCount}>
-          Next
-      </button>
-      </div>
-      PAGE UNDER REVAMPS
-      {loading ? (
-            <LoadingPage />
-        ) : (
-      <ul>
-          {paginatedData.map(team => (
-            <li key={filteredData.id}>
-              <TeamDisplay name={ String(team.number) + " || "  + team.team_name} id={team.id}/>
-              </li>
-          ))} 
-      </ul>
-      )}
-
+      Press Enter to Search
     </div>
     
   );
