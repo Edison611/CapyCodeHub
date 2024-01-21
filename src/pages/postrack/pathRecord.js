@@ -20,8 +20,8 @@ const PathRecord = () => {
     };
 
     function mouseToCoord(x, y) {
-        x = (((x - (windowSize[0]/5))/3.542) * 1280/windowSize[0]).toFixed(0);
-        y = ((-(y - (windowSize[1]/2.25))/3.2361) * 585/windowSize[1]).toFixed(0);
+        x = (((x - (windowSize[0]/5))/3.542) * 1280/windowSize[0]).toFixed(1);
+        y = ((-(y - (windowSize[1]/2.25))/3.2361) * 585/windowSize[1]).toFixed(1);
         return [x, ", ",y]
     }
 
@@ -61,10 +61,10 @@ const PathRecord = () => {
         window.removeEventListener('resize', handleWindowResize);
         };
     }, []);
-
+        // ----------------------------
     // Add the width and height states for the square
-    const [squareWidth, setSquareWidth] = useState(10);
-    const [squareHeight, setSquareHeight] = useState(12);
+    const [squareWidth, setSquareWidth] = useState(12);
+    const [squareHeight, setSquareHeight] = useState(14);
 
     const handleSquareWidthChange = (event) => {
         setSquareWidth(parseInt(event.target.value));
@@ -73,6 +73,16 @@ const PathRecord = () => {
     const handleSquareHeightChange = (event) => {
         setSquareHeight(parseInt(event.target.value));
     };
+    // ----------------------------
+    // Time Stats
+    const [timeInterval, setTimeInterval] = useState(0.05);
+    const [time, setTime] = useState(0.000);
+
+    const handleTimeIntervalChange = (event) => {
+        setTimeInterval(parseInt(event.target.value));
+    };
+    // ----------------------------
+
     var position = mouseToCoord(localMousePos.x, localMousePos.y)
     var botSize = valToSize(squareWidth, squareHeight);
 
@@ -90,25 +100,33 @@ const PathRecord = () => {
 
     // Parse the coordinates entered in the text box
     const handleCoordinatesChange = (event) => {
-    setCoordinatesText(event.target.value);
+        setCoordinatesText(event.target.value)
     };
 
     // Function to split the coordinates text and update the coordinatesList state
     const updateCoordinatesList = () => {
-    const coords = coordinatesText.trim().split("\n");
-    setCoordinatesList(coords);
-    setCurrentCoordIndex(0);
+        const coords = coordinatesText.trim().split("\n");
+        setCoordinatesList(coords);
+        setCurrentCoordIndex(0);
+        setTime(0.000);
     };
 
     // Function to handle forward and backward buttons to show next/previous coordinates
     const handleNextCoordinate = () => {
-    setCurrentCoordIndex((prevIndex) =>
-        prevIndex < coordinatesList.length - 1 ? prevIndex + 1 : prevIndex
-    );
+        setTime(parseFloat(time + timeInterval).toFixed(3))
+        setCurrentCoordIndex((prevIndex) =>
+            prevIndex < coordinatesList.length - 1 ? prevIndex + 1 : prevIndex
+        );
     };
 
     const handlePreviousCoordinate = () => {
-    setCurrentCoordIndex((prevIndex) => (prevIndex > 0 ? prevIndex - 1 : prevIndex));
+        setTime(parseFloat(time - timeInterval).toFixed(3) >= 0 ? parseFloat(time - timeInterval).toFixed(3) : 0.000)
+        setCurrentCoordIndex((prevIndex) => (prevIndex > 0 ? prevIndex - 1 : prevIndex));
+    };
+
+    const handleSliderChange = (event) => {
+        const newIndex = parseInt(event.target.value, 10);
+        setCurrentCoordIndex(newIndex);
     };
 
 
@@ -145,6 +163,16 @@ const PathRecord = () => {
                     onChange={handleSquareHeightChange}
                 />
             </div>
+            <div>
+                <label>Time Interval: </label>
+                <input
+                    className="botStats"
+                    type="number"
+                    id=""
+                    value={timeInterval}
+                    onChange={handleTimeIntervalChange}
+                />
+            </div>
            
             <div className="toggle-container">
             Show text:
@@ -176,13 +204,16 @@ const PathRecord = () => {
                 <button onClick={handlePreviousCoordinate}>Backward</button>
                 <button onClick={handleNextCoordinate}>Forward</button>
             </div>
+            <input
+                type="range"
+                min={0}
+                max={coordinatesList.length - 1}
+                value={currentCoordIndex}
+                onChange={handleSliderChange}
+                style={{ width: '260px'}}
+            />
         </div>
         <div className='container_main'>
-            {/* <form>
-            <label> Enter Coordinates:
-                <input type="test" />
-            </label>
-            </form> */}
             
             {<img src={imageToShow} className='field' alt="" onMouseMove={handleMouseMove}></img>}
             <br />
@@ -190,6 +221,10 @@ const PathRecord = () => {
             Position:
             <b>
                 ({position})
+            </b>
+            , Time:
+            <b>
+                {parseFloat(currentCoordIndex*timeInterval).toFixed(4)}s
             </b>
             </div>
             <BotDrawer
