@@ -205,7 +205,7 @@ const TeamCompetition = () => {
 
   return (
   <div>
-    {teamData && <h1>{teamData.team_name}</h1>}
+    {teamData && <div className='team-title'>{teamData.team_name} ({teamData.number})</div>}
     <div className='match-container'>
         {matchData && matchData.map((match) => (
             <MatchDisplay 
@@ -224,7 +224,7 @@ const TeamCompetition = () => {
         ))}
       </div>
     {alliances && opponents && <ScoutingTeamsDisplay alliances={alliances} opponents={opponents} />}
-    <div className='subtitle'>Games to Watch:</div>
+    <div className='team-title'>Games to Watch:</div>
     <div className='match-container'>
         {watchData && watchData.map((match) => (
             <MatchDisplay 

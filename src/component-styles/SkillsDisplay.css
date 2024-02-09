@@ -1,0 +1,44 @@
+.skills-container {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start; /* Align items to the top */
+    flex-wrap: wrap; /* Allow items to wrap to the next row */
+  }
+  
+  .skill-column {
+    width: 50%; /* Each column takes up half the page */
+  }
+  
+  .skill-card {
+    background-color: #f9f9f9;
+    border-radius: 10px;
+    padding: 20px;
+    margin: 10px;
+    width: calc(90% - 20px); /* Adjust width for margin */
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+  }
+  
+  .skill-card h3 {
+    margin-top: 0;
+  }
+  
+  .rank {
+    font-weight: bold;
+  }
+  
+  .score-details {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 10px;
+  }
+  
+  .driver-score, .programming-score {
+    width: 40%; /* Adjust width as needed */
+  }
+  
+  .total-score {
+    margin-top: 10px;
+    font-weight: bold;
+    text-align: center;
+  }
+  
