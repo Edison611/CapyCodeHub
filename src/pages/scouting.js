@@ -68,7 +68,7 @@ function Scouting() {
           value={inputText} // Bind the input value to the state
         />
       </div>
-      Press Enter to Search
+      <div className='subtitle'>Enter a Valid Team Number. Then Press Enter to Search</div>
       <br></br>
       {error}
     </div>
