@@ -1,0 +1,46 @@
+.competition-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  
+  .competition-card {
+    width: calc(90% - 20px); /* Adjust width to occupy half the page */
+    margin: 10px;
+    padding: 20px;
+    background-color: #f9f9f9; /* Light background color */
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+    transition: transform 0.3s ease; /* Smooth transition on hover */
+  }
+  
+  .competition-card:hover {
+    transform: translateY(-5px); /* Move card up slightly on hover */
+  }
+  
+  .left-column {
+    flex: 1; /* Make left column flexible */
+  }
+  
+  .right-column {
+    flex: 1; /* Make right column flexible */
+  }
+  
+  .competition-card h3 {
+    margin-top: 0;
+    color: #333; /* Darken heading text color */
+  }
+  
+  .competition-card p {
+    margin: 10px 0;
+    color: #666; /* Slightly darken paragraph text color */
+  }
+  
+  /* Add some spacing between cards on smaller screens */
+  @media (max-width: 768px) {
+    .competition-card {
+      width: calc(100% - 20px); /* Occupy full width on smaller screens */
+      flex-direction: column; /* Stack columns on smaller screens */
+    }
+  }
+  
