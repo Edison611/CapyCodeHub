@@ -3,13 +3,16 @@ import { useParams } from 'react-router-dom';
 import '../../page-styles/teams/TeamHome.css'
 import { useNavigate } from 'react-router-dom';
 import SkillsDisplay from '../../components/SkillsDisplay';
-
+import CompetitionDisplay from '../../components/CompetitionsDisplay';
 
 const TeamHome = () => {
   const navigate = useNavigate();
 
   const { team_id } = useParams();
   const [teamData, setTeamData] = useState([]);
+  const [compData, setCompData] = useState([]); 
+  const [matchData, setMatchData] = useState([]);
+  const [awardsData, setAwardsData] = useState([]);
   const [skillsData, setSkillsData] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -37,6 +40,15 @@ const TeamHome = () => {
         const skillsInfo = await fetchPageData(team_id + "/skills?season%5B%5D=181&per_page=250");
         setSkillsData(skillsInfo.data);
 
+        const compInfo = await fetchPageData(team_id + "/rankings?season%5B%5D=181&per_page=250");
+        setCompData(compInfo.data);
+
+        const matchInfo = await fetchPageData(team_id + "/matches?season%5B%5D=181&per_page=250");
+        setMatchData(matchInfo.data);
+
+        const awardsInfo = await fetchPageData(team_id + "/awards?season%5B%5D=181&per_page=250");
+        setAwardsData(awardsInfo.data);
+
         setLoading(false);
       } catch (error) {
         setError(error);
@@ -47,15 +59,6 @@ const TeamHome = () => {
     fetchData();
     
   }, []);
-
-  useEffect(() => {
-    
-  }, [skillsData])
-  console.log("teamData: ", teamData)
-  console.log("skillsData: ", skillsData)
-    
-  console.log(teamData)
-
 
   if (loading) {
     return <div>Loading...</div>;
@@ -72,12 +75,25 @@ const TeamHome = () => {
       <div>
         <div className='team-title'>{teamData.team_name} ({teamData.number})</div>
         {teamData && (<div className='team-location'>{teamData.location.city}, {teamData.location.region}, {teamData.location.country}</div>)}
+        <div className="subtitle">Competitions:</div>
+        <div className="line"></div>
+        <div className='competition-data'>
+           <CompetitionDisplay competitionData={compData} />
+        </div>
         <div className='subtitle'>Skills Data:</div>
         <div className="line"></div>
-         <div className='skills-data'>
+        <div className='skills-data'>
            <SkillsDisplay skillsData={skillsData} />
         </div>
-        
+        <div className='subtitle'>Awards:</div>
+        <div className="line"></div>
+        <div className='awards-data'>
+          {awardsData.map((award, index) => (
+            <div key={index} className="award-card">
+              <h3>{award.title}</h3>
+              <p>Event: {award.event.name}</p>
+            </div>
+          ))}</div>
         </div>)}
   </div>
 
