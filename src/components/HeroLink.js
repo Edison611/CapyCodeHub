@@ -10,7 +10,7 @@ function HeroLink({ image, title, text, buttons }) {
       <div className="background">
         <img src={image} alt="" className="background-image" />
         <div className="herolink-content">
-          <div className="title">{title}</div>
+          <div className="text-7xl font-bold text-white mb-4">{title}</div>
           <div className="text">{text}</div>
           <div className="button-container">
             {buttons.map((item) => (
