@@ -58,6 +58,7 @@ const Matches = () => {
   const [scheduleData, setScheduleData] = useState(null);
   const [rankingsData, setRankingsData] = useState([]);
   const [teamsData, setTeamsData] = useState([]);
+  const [statsData, setStatsData] = useState([]);
 
   var teamsMap = {};
 
@@ -110,6 +111,14 @@ const Matches = () => {
       .catch((error) => {
         console.error("Error fetching teams data:", error);
       });
+    // fetch("http://localhost:5000/data").then(
+    //   res => res.json()
+    // ).then(
+    //   data => {
+    //     setStatsData(data);
+    //     console.log(data);
+    //   }
+    // )
   }, [activePage]);
 
   if (teamsData.length > 0) {
@@ -182,7 +191,17 @@ const Matches = () => {
             </div>
           </div>
         )}
-      </div>
+
+        {activePage === "stats" && teamsData && (
+          <div className="team-container">
+            COMING SOON!!!
+            {statsData}
+            <div className="team-container">
+
+            </div>
+          </div>
+        )}
+      </div>  
     </div>
   );
 };

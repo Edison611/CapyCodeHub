@@ -26,6 +26,12 @@ const DivisionNavbar = ({ onDivisionClick, activePage }) => {
       >
         Teams
       </div>
+      <div
+        className={`navbar-item ${activePage === "stats" ? "active" : ""}`}
+        onClick={() => handlePageChange("stats")}
+      >
+        Stats
+      </div>
     </div>
   );
 };
