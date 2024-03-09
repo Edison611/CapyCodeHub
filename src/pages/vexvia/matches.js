@@ -46,7 +46,29 @@ const Display = ({ number, name, ranking, wp, ap, sp, wins, losses, ties, id }) 
     );
   };
   
+  const StatsDisplay = ({ team, data }) => {
+    const { event_id } = useParams();
+    const navigate = useNavigate();
 
+    return (
+        <div className="display">
+            <div className="teams-table">
+                <div className="column">
+                    <div className="num">{team}</div>
+                </div>
+                <div className="column">
+                    <div>OPR: {data.OPR}</div>
+                </div>
+                <div className="column">
+                    <div>DPR: {data.DPR}</div>
+                </div>
+                <div className="column">
+                    <div>CCWM: {data.CCWM}</div>
+                </div>
+            </div>
+        </div>
+    );
+};
 
 const Matches = () => {
   const navigate = useNavigate();
@@ -58,6 +80,7 @@ const Matches = () => {
   const [scheduleData, setScheduleData] = useState(null);
   const [rankingsData, setRankingsData] = useState([]);
   const [teamsData, setTeamsData] = useState([]);
+  const [statsData, setStatsData] = useState([]);
 
   var teamsMap = {};
 
@@ -110,7 +133,21 @@ const Matches = () => {
       .catch((error) => {
         console.error("Error fetching teams data:", error);
       });
+      
   }, [activePage]);
+
+  useEffect(() => {
+    fetch('http://localhost:5000/data', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ teamData: teamsData, matchData: scheduleData }),
+      })
+        .then(response => response.json())
+        .then(jsonData => setStatsData(jsonData))
+        .catch(error => console.error('Error:', error));
+    }, [teamsData, scheduleData]);
 
   if (teamsData.length > 0) {
     teamsData.forEach((team) => {
@@ -136,6 +173,33 @@ const Matches = () => {
       }
     })
   }
+  console.log(statsData)
+  const [sortBy, setSortBy] = useState(null);
+  const sortByCriterion = (criterion) => {
+    setSortBy(criterion);
+};
+
+const sortedTeams = () => {
+    const teamsArray = Object.keys(statsData.OPR).map(team => ({
+        team: team,
+        data: {
+            OPR: statsData.OPR[team],
+            DPR: statsData.DPR[team],
+            CCWM: statsData.CCWM[team]
+        }
+    }));
+
+    if (sortBy === 'OPR') {
+        return teamsArray.sort((a, b) => b.data.OPR - a.data.OPR)
+    } else if (sortBy === 'DPR') {
+        return teamsArray.sort((a, b) => b.data.DPR - a.data.DPR);
+    } else if (sortBy === 'CCWM') {
+        return teamsArray.sort((a, b) => b.data.CCWM - a.data.CCWM);
+    } else {
+        return(teamsArray)
+    } 
+};
+
 
 
 
@@ -182,7 +246,29 @@ const Matches = () => {
             </div>
           </div>
         )}
-      </div>
+        {activePage === "stats" && teamsData && statsData && (
+            <div>Coming soon</div>
+            // <div className="team-container">
+            //   <tr>
+            //                 <th className="px-4 py-2 bg-gray-800 text-gray-200" onClick={() => sortByCriterion('team')}>Team</th>
+            //                 <th className="px-4 py-2 bg-gray-800 text-gray-200" onClick={() => sortByCriterion('OPR')}>OPR</th>
+            //                 <th className="px-4 py-2 bg-gray-800 text-gray-200" onClick={() => sortByCriterion('DPR')}>DPR</th>
+            //                 <th className="px-4 py-2 bg-gray-800 text-gray-200" onClick={() => sortByCriterion('CCWM')}>CCWM</th>
+            //             </tr>
+            //     {sortedTeams().map(team => (
+            //       <div key={team} className="team-stats">
+            //           <StatsDisplay team={team.team} data={{
+            //               OPR: team.data.OPR,
+            //               DPR: team.data.DPR,
+            //               CCWM: team.data.CCWM
+            //           }}
+            //           />
+            //       </div>
+            //   ))}
+            // </div>
+        )}
+        
+      </div>  
     </div>
   );
 };
