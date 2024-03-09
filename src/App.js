@@ -12,6 +12,7 @@ import CodeGenerator from './pages/postrack/codeGenerator'
 import Awards from './pages/vexvia/Awards'
 import TeamHome from './pages/teams/TeamHome.js'
 import TeamCompetition from './pages/teams/TeamCompetition.js'
+import DivisionPredictor from './pages/division-predictor.js'
 
 function App() {
   return (
@@ -29,6 +30,7 @@ function App() {
         <Route path="/vexvia/comps/:event_id/awards" element={<Awards />} />
         <Route path="/vexvia/teams/:team_id/" element={<TeamHome />} />
         <Route path="/vexvia/teams/:team_id/:event_id" element={<TeamCompetition/>} />
+        <Route path="/predictor/" element={<DivisionPredictor />} />
       </Routes>
     </div>
   )

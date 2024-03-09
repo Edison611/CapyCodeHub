@@ -27,7 +27,7 @@ const Home = () => {
 
       <HeroLink image={field} title={"Robot Position Tracker"} text={"A webpage to help with figuring out the placement of robots"} buttons={[{name: "Robot Position Tracker", link: "/tracker"}, {name: "Path Visualizer", link: "/path-record"}, {name: "Code Generator", link: "/code-generator"}]} />
       <br />
-      <HeroLink image={scouting} title={"Scouting"} text={"A webpage to help with scouting"} buttons={[{name: "Scouting", link: "/scouting"}, {name: "Vex Via", link: "/vexvia"}]} />
+      <HeroLink image={scouting} title={"Scouting"} text={"A webpage to help with scouting"} buttons={[{name: "Scouting", link: "/scouting"}, {name: "Vex Via", link: "/vexvia"}, {name: "Worlds Division Predictor", link: "/predictor"}]} />
         
         <section className="contact">
           <div className='subheader'>Contact Us</div>
