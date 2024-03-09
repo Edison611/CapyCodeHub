@@ -106,7 +106,7 @@ function Vexvia() {
   return (
     <div className="main">
       <img src={logo} onClick={ () => navigate("/")} alt="" className='logo2'></img>
-      <h1>Events</h1>
+      <div className='mb-4 text-3xl font-bold leading-none tracking-tight text-gray-900 md:text-5xl lg:text-5xl pt-10'>Events</div>
       <div className="search">
         <TextField
           id="outlined-basic"

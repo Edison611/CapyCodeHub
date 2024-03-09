@@ -1,6 +1,6 @@
 import React from "react";
 import "../../page-styles/postrack/tracker.css";
-import "../../page-styles/postrack/codeGenerator.css";
+// import "../../page-styles/postrack/codeGenerator.css";
 import { useState, useEffect, useRef } from 'react';
 import field from '../../images/field.png'
 import skills_field from '../../images/skills-field.png'
@@ -147,11 +147,11 @@ const CodeGenerator = () => {
     
 
     return (  
-    <div>
+    <div className="">
         <PosTrackNavbar />
         <div className='skills'>
         <ToggleSwitch label="Skills: " onToggle={handleToggle}/>
-        </div>
+        </div>  
         <div className="coordinates-box">
             <h2>Code:</h2>
             <textarea
@@ -216,9 +216,9 @@ const CodeGenerator = () => {
                 <button onClick={handleNextCoordinate}>Forward</button>
             </div>
         </div>
-        <div className='container_main'>
+        <div className='container-main'>
+                <img src={imageToShow} className='field' alt="" onMouseMove={handleMouseMove} />
             
-            {<img src={imageToShow} className='field' alt="" onMouseMove={handleMouseMove}></img>}
             <br />
             <div className='coord'>
             Position:

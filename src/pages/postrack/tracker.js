@@ -103,6 +103,7 @@ const Tracker = () => {
       };
 
     return (  
+    <div class='remove-all'>
         <div>
         <PosTrackNavbar />
         <div className='skills'>
@@ -185,7 +186,7 @@ const Tracker = () => {
             </label>
             </form> */}
             
-            {<img src={imageToShow} className='field' alt="" onMouseMove={handleMouseMove}></img>}
+            {<img src={imageToShow} className='remove-all field' alt="" onMouseMove={handleMouseMove}></img>}
             <br />
             <div className='coord'>
             Position:
@@ -201,6 +202,7 @@ const Tracker = () => {
             rotation={squareRotation}
             showText={showText}
             />
+        </div>
         </div>
         </div>
     );

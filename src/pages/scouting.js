@@ -53,10 +53,10 @@ function Scouting() {
 
   
   return (
-    <div className="main">
-      
+    <div className="main inline-block align-middle">
+
       <img src={logo} onClick={ () => navigate("/")} alt="" className='logo2'></img>
-      <h1>Scouting Search</h1>
+      <div className='mb-4 text-3xl font-bold leading-none tracking-tight text-gray-900 md:text-5xl lg:text-5xl pt-10'>Scouting Search</div>
       <div className="search">
         <TextField
           id="outlined-basic"
@@ -64,7 +64,7 @@ function Scouting() {
           onKeyDown={handleKeyPress}
           variant="outlined"
           fullWidth
-          label="Search for teams"
+          label="Search For Teams e.g. 2055A"
           value={inputText} // Bind the input value to the state
         />
       </div>
