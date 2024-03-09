@@ -38,8 +38,7 @@ function Vexvia() {
         setLoading(false);
       });
     }
-
-    const totalPages = 20; // should be 5 for full use
+    const totalPages = 30; // should be 5 for full use
 
     function fetchAllData() {
       const fetchPromises = [];
