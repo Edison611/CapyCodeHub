@@ -13,6 +13,7 @@ import Awards from './pages/vexvia/Awards'
 import TeamHome from './pages/teams/TeamHome.js'
 import TeamCompetition from './pages/teams/TeamCompetition.js'
 import DivisionPredictor from './pages/division-predictor.js'
+import MSDivisionPredictor from './pages/ms-division-predictor.js'
 
 function App() {
   return (
@@ -31,6 +32,7 @@ function App() {
         <Route path="/vexvia/teams/:team_id/" element={<TeamHome />} />
         <Route path="/vexvia/teams/:team_id/:event_id" element={<TeamCompetition/>} />
         <Route path="/predictor/" element={<DivisionPredictor />} />
+        <Route path="/predictorMS/" element={<MSDivisionPredictor />} />
       </Routes>
     </div>
   )
