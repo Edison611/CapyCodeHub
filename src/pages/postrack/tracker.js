@@ -103,7 +103,6 @@ const Tracker = () => {
       };
 
     return (  
-    <div class='remove-all'>
         <div>
         <PosTrackNavbar />
         <div className='skills'>
@@ -195,14 +194,13 @@ const Tracker = () => {
             </b>
             </div>
             <BotDrawer
-            x={(botPosition[0] - botSize[0] / 2)}
-            y={(botPosition[1] - botSize[1] / 2)}
-            width={botSize[0]}
-            height={botSize[1]}
-            rotation={squareRotation}
-            showText={showText}
+                x={(botPosition[0] - botSize[0] / 2)}
+                y={(botPosition[1] - botSize[1] / 2)}
+                width={botSize[0]}
+                height={botSize[1]}
+                rotation={squareRotation}
+                showText={showText}
             />
-        </div>
         </div>
         </div>
     );
