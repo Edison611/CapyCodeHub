@@ -136,18 +136,18 @@ const Matches = () => {
       
   }, [activePage]);
 
-  // useEffect(() => {
-  //   fetch('http://localhost:5000/data', {
-  //       method: 'POST',
-  //       headers: {
-  //         'Content-Type': 'application/json',
-  //       },
-  //       body: JSON.stringify({ teamData: teamsData, matchData: scheduleData }),
-  //     })
-  //       .then(response => response.json())
-  //       .then(jsonData => setStatsData(jsonData))
-  //       .catch(error => console.error('Error:', error));
-  //   }, [teamsData, scheduleData]);
+  useEffect(() => {
+    fetch('http://localhost:5000/data', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ teamData: teamsData, matchData: scheduleData }),
+      })
+        .then(response => response.json())
+        .then(jsonData => setStatsData(jsonData))
+        .catch(error => console.error('Error:', error));
+    }, [teamsData, scheduleData]);
 
   if (teamsData.length > 0) {
     teamsData.forEach((team) => {
