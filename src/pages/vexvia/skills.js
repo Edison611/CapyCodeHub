@@ -32,19 +32,24 @@ const DivisionNavbar = ({ onDivisionClick, activePage }) => {
   };
   
 
-const Display = ({ number, name, ranking, driver, prog }) => {
+const Display = ({ number, ranking, driver, prog, bold, rankFor }) => {
   return (
     <div className="display">
       <div className="display-row">
         <div className="display-item">{number}</div>
-        <div className="display-item">{name}</div>
+        <div className="display-item">Rank By Category: {rankFor}</div>
       </div>
       <div className="display-row">
         <div className="display-item rankings">
           <strong>{ranking}</strong>
         </div>
-        <div className="display-item">{`Total: ${driver+prog}, Driver: ${driver}, Prog: ${prog}`}</div>
+        <div className="display-item">
+          {bold === "total" && (<div><strong>{`Total: ${driver+prog}`}</strong>, {`Driver: ${driver}, Prog: ${prog}`}</div>)}
+          {bold === "driver" && (<div>{`Total: ${driver+prog},`} <strong>{`Driver: ${driver}, `}</strong> {`Prog: ${prog}`}</div>)}
+          {bold === "prog" && (<div>{`Total: ${driver+prog}, Driver: ${driver}, `} <strong>{`Prog: ${prog}`}</strong></div>)}
+        </div>
       </div>
+      
     </div>
   );
 };
@@ -57,7 +62,6 @@ const Skills = () => {
   const [rankingsData, setRankingsData] = useState([]);
   const [driverData, setDriverData] = useState([]);
   const [progData, setProgData] = useState([]);
-  const [updatedData, setUpdatedData] = useState([]);
 
   const handleTabChange = (tab) => {
     setActiveTab(tab);
@@ -77,19 +81,8 @@ const Skills = () => {
       })
         .then((response) => response.json())
         .then((data) => {
-          console.log(data)
+          // console.log(data.data)
           setRankingsData(data.data);
-          rankingsData.forEach((team) => {
-              if (team.type === "driver") {
-              setDriverData((driverData) => [...driverData, team]);
-              } else if (team.type === "programming") {
-              setProgData((progData) => [...progData, team]);
-              }
-          });
-      
-          for (let i = 0; i < progData.length; i++) {
-              setUpdatedData((updatedData) => [...updatedData, {"id": driverData[i].team.id, "name":driverData[i].team.name, "rank":driverData[i].rank, "driver":driverData[i].score, "prog":progData[i].score}])
-          }
       
         })
         .catch((error) => {
@@ -97,47 +90,114 @@ const Skills = () => {
         });
     }
     fetchData();
-    console.log(driverData)
-    for (let i = 0; i < progData.length; i++) {
-        setUpdatedData((updatedData) => [...updatedData, {"id": driverData[i].team.id, "name":driverData[i].team.name, "rank":driverData[i].rank, "driver":driverData[i].score, "prog":progData[i].score}])
-    }
     
-  }, [activeTab]);
+  }, []);
 
-  // console.log(updatedData)
+  useEffect(() => {
+    rankingsData.forEach((team) => {
+      if (team.type === "driver") {
+      setDriverData((driverData) => [...driverData, team]);
+      } else if (team.type === "programming") {
+      setProgData((progData) => [...progData, team]);
+      }
+  });
+  }, [rankingsData])
+
+
+
+  // console.log(rankingsData)
+  // console.log("driverData", driverData)
+  // console.log("progData", progData)
+
+  const updateData = () => {
+    const newData = []
+    for (let i = 0; i < progData.length; i++) {
+      newData.push({"id": progData[i].team.id, "name":progData[i].team.name, "rank":progData[i].rank, "driver":driverData[i].score, "prog":progData[i].score})
+    }
+    return newData
+  }
+
+  const sortByDriver = () => {
+    let data = updateData()
+    const sortedData = data.sort((a, b) => a.driver - b.driver)
+    sortedData.reverse()
+    for (let i = 0; i < sortedData.length; i++) {
+      sortedData[i]["rankFor"] = i+1
+    }
+    return sortedData
+  }
+  const sortByProg = () => {
+    let data = updateData()
+    const sortedData = data.sort((a, b) => a.prog - b.prog)
+    sortedData.reverse()
+    for (let i = 0; i < sortedData.length; i++) {
+      sortedData[i]["rankFor"] = i+1
+    }
+    return sortedData
+  }
 
   return (
     <div>
       <DivisionNavbar onDivisionClick={handleTabChange} activeTab={activeTab} />
 
-      <div>
-        {activeTab === "byRank" && (
+      <div className="conent-center">
+        {activeTab === "byRank" && rankingsData && (
           <div className="container">
             <div className="team-container">
-              {updatedData.map((team) => (
-                <div className="team-container" key={team.id}>
-                  <Display
-                    number={team.name}
-                    ranking={team.rank}
-                    driver={team.driver}
-                    prog={team.prog}
-                  />
-                </div>
-              ))}
+                {updateData().map((team) => (
+                  <li className="team-container" key={team.id}>
+                    <Display
+                      number={team.name}
+                      ranking={team.rank}
+                      driver={team.driver}
+                      prog={team.prog}
+                      bold={"total"}
+                    />
+                  </li>
+                  ))
+                }
             </div>
           </div>
         )}
 
-        {activeTab === "byDriver" && updatedData && (
+        {activeTab === "byDriver" && rankingsData && (
           <div className="container">
-            WORK IN PROGRESS   
+            <div className="team-container">
+                {sortByDriver(driverData).map((team) => (
+                  <li className="team-container" key={team.id}>
+                    <Display
+                      number={team.name}
+                      ranking={team.rank}
+                      driver={team.driver}
+                      prog={team.prog}
+                      bold={"driver"}
+                      rankFor={team.rankFor}
+                    />
+                  </li>
+                  ))
+                }
           </div>
+        </div>
         )}
 
-        {activeTab === "byProg" && updatedData && (
+        {activeTab === "byProg" && rankingsData && (
           <div className="container">
-            WORK IN PROGRESS   
+            <div className="team-container">
+                {sortByProg(driverData).map((team) => (
+                  <li className="team-container" key={team.id}>
+                    <Display
+                      number={team.name}
+                      ranking={team.rank}
+                      driver={team.driver}
+                      prog={team.prog}
+                      bold={"prog"}
+                      rankFor={team.rankFor}
+                    />
+                  </li>
+                  ))
+                }
           </div>
+      </div>
         )}
 
       </div>

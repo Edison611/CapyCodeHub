@@ -153,7 +153,7 @@ const CodeGenerator = () => {
         <ToggleSwitch label="Skills: " onToggle={handleToggle}/>
         </div>  
         <div className="coordinates-box">
-            <h2>Code:</h2>
+            <h2>Lemlib Code:</h2>
             <textarea
                 ref={textareaRef}
                 rows="5"
