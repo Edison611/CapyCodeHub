@@ -63,8 +63,8 @@ const Tracker = () => {
     }, []);
 
     // Add the width and height states for the square
-    const [squareWidth, setSquareWidth] = useState(10);
-    const [squareHeight, setSquareHeight] = useState(12);
+    const [squareWidth, setSquareWidth] = useState(12);
+    const [squareHeight, setSquareHeight] = useState(14);
 
     const [startPos, setStartPos] = useState([0, 0]);
 

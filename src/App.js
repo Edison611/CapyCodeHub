@@ -23,7 +23,7 @@ function App() {
         <Route path="/tracker" element={<Tracker />} />
         <Route path="/path-record" element={<PathRecord />} />
         <Route path="/code-generator" element={<CodeGenerator />} />
-        <Route path="/scouting" element={<Scouting />} />
+        <Route path="/vexvia/teams" element={<Scouting />} />
         <Route path="/vexvia" element={<Vexvia />} />
         <Route path="/vexvia/comps/:event_id" element={<EventHome />} />
         <Route path="/vexvia/comps/:event_id/skills" element={<Skills />} />

@@ -4,6 +4,7 @@ import EventDisplay from '../components/EventDisplay';
 import '../page-styles/vexvia.css'
 import { useNavigate } from "react-router-dom";
 import logo from "../images/logo.png"
+import LoadingPage from '../components/Loading';
 
 function Vexvia() {
   const navigate = useNavigate();
@@ -35,7 +36,6 @@ function Vexvia() {
       })
       .catch(error => {
         setError(error);
-        setLoading(false);
       });
     }
     const totalPages = 30; // should be 5 for full use
@@ -46,14 +46,11 @@ function Vexvia() {
         fetchPromises.push(fetchDataForPage(page));
       }
       Promise.all(fetchPromises)
-        // .then(() => {
-          // console.log('All data retrieved:', teams);
-          
-        // });
+      setLoading(false);
     }
 
     fetchAllData();
-    setLoading(false);
+    
 
     
   }, [accessToken]);
@@ -95,6 +92,9 @@ function Vexvia() {
     }
   };
   
+  if (loading) {
+    return <LoadingPage />;
+  }
 
 
   if (error) {
