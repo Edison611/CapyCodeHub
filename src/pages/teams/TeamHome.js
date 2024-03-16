@@ -3,7 +3,8 @@ import { useParams } from 'react-router-dom';
 import '../../page-styles/teams/TeamHome.css'
 import { useNavigate } from 'react-router-dom';
 import SkillsDisplay from '../../components/SkillsDisplay';
-import CompetitionDisplay from '../../components/CompetitionsDisplay';
+import CompetitionDisplay from '../../components/CompetitionsDisplay'
+import LoadingPage from '../../components/Loading';
 
 const TeamHome = () => {
   const navigate = useNavigate();
@@ -61,7 +62,7 @@ const TeamHome = () => {
   }, []);
 
   if (loading) {
-    return <div>Loading...</div>;
+    return <LoadingPage />;
   }
 
   if (error) {

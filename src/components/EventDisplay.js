@@ -7,7 +7,6 @@ const EventDisplay = ({ name, location, date, id }) => {
 
   const navigate = useNavigate()
 
-
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(true);
 
@@ -37,7 +36,6 @@ const EventDisplay = ({ name, location, date, id }) => {
     });
   }
 
-  
 
   if (error) {
     <div>An Error Has Occured, Please Refresh The Page.</div>

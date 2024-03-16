@@ -100,6 +100,10 @@ const MSDivisionPredictor = () => {
     });
     const current = sorted.length % divisions;
 
+    for (let i = 0; i < teamsByDivision.length; i++) {
+      teamsByDivision[i].push({number: teamsByDivision[i].length.toString() + " Teams", id: ''})
+    }
+
     for (let i = current; i < divisions; i++) {
         teamsByDivision[i].push({number: ''});
     }
@@ -127,7 +131,7 @@ const MSDivisionPredictor = () => {
               <th className="border border-gray-300 px-4 py-2 text-4xl" colSpan={divisions}>Worlds MS Division Predictor</th>
             </tr>
             <tr>
-                <th className="border border-gray-300 px-4 py-2" colSpan={divisions}> Updates Live in Real Time (Click on a team to view more info!)</th>
+                <th className="border border-gray-300 px-4 py-2" colSpan={divisions}> Updates Live in Real Time (Click on a team to view more info!) - {data.length} Teams Currently Signed Up</th>
             </tr>
             <tr className="bg-gray-200">
               {Array.from({ length: divisions }, (_, index) => (

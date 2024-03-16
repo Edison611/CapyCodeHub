@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import LoadingPage from '../components/Loading';
 
 // Individual Team Component
 const TeamItem = ({ team }) => {
@@ -100,9 +101,13 @@ const DivisionPredictor = () => {
     });
     const current = sorted.length % divisions;
 
-    for (let i = current; i < divisions; i++) {
-        teamsByDivision[i].push({number: ''});
+    for (let i = 0; i < teamsByDivision.length; i++) {
+      teamsByDivision[i].push({number: teamsByDivision[i].length.toString() + " Teams", id: ''})
     }
+
+    for (let i = current; i < divisions; i++) {
+      teamsByDivision[i].push({number: '', id: ''});
+  }
     console.log(teamsByDivision)
 
     return teamsByDivision.map((teams, index) => (
@@ -111,7 +116,7 @@ const DivisionPredictor = () => {
   };
 
   if (loading) {
-    return <div>Loading...</div>;
+    return <LoadingPage />;
   }
 
   if (error) {
@@ -127,7 +132,7 @@ const DivisionPredictor = () => {
               <th className="border border-gray-300 px-4 py-2 text-4xl" colSpan={divisions}>Worlds HS Division Predictor</th>
             </tr>
             <tr>
-                <th className="border border-gray-300 px-4 py-2" colSpan={divisions}> Updates Live in Real Time (Click on a team to view more info!)</th>
+                <th className="border border-gray-300 px-4 py-2" colSpan={divisions}> Updates Live in Real Time (Click on a team to view more info!) - {data.length} Teams Signed Up Currently</th>
             </tr>
             <tr className="bg-gray-200">
               {Array.from({ length: divisions }, (_, index) => (
