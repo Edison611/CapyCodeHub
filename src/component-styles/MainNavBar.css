@@ -17,6 +17,7 @@
     margin-top: 0;
     padding-top: 0;
     background-color: #F0FFFF;
+    border-bottom: 1px solid black;
   }
   
   .logo {

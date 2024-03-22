@@ -10,7 +10,11 @@ const MainNavbar = () => {
         <div className='main-nav-container'>
             <img src={logo} onClick={ () => navigate("/")} alt="" className='logo'></img>
             <div className='navigation'>
-                <button className="button-nav" onClick={ () => navigate("/tracker")} >Robot Position</button>
+                {/* <button className="button-nav" onClick={ () => navigate("/tracker")} >Robot Position</button> */}
+                <button className="button-nav" onClick={ () => navigate("/vexvia/teams")} >Scouting</button>
+                <button className="button-nav" onClick={ () => navigate("/vexvia")} >Vex Via</button>
+                <button className="button-nav" onClick={ () => navigate("/predictor")} >HS Worlds</button>
+                <button className="button-nav" onClick={ () => navigate("/predictorMS")} >MS Worlds</button>
                 <button className="button-nav" onClick={ () => navigate("/path-record")} >Path Visualizer</button>
                 <button className="button-nav" onClick={ () => navigate("/code-generator")} >Code Generator</button>
             </div>
