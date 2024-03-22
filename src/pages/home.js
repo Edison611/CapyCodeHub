@@ -1,17 +1,19 @@
 // HomePage.js
 import React from 'react';
-import logo from '../images/field.png'
-import "../page-styles/home.css"
-import "../styles/general.css"
-import "../styles/buttons.css"
+import logo from '../images/field.png';
+import "../page-styles/home.css";
+import "../styles/general.css";
+import "../styles/buttons.css";
 import Hero from '../components/HeroBg';
 import HeroLink from '../components/HeroLink';
 import field from '../images/field.png';
-import scouting from "../images/scouting.png"
+import scouting from "../images/scouting.png";
+import MainNavbar from '../components/MainNavbar';
 
 const Home = () => {
   return (
     <div>
+      <MainNavbar />
       <Hero image={logo} title={"Capybaras (2055) Programming Website"} />
     
       <main>

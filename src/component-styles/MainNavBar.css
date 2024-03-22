@@ -1,0 +1,51 @@
+@import url('https://fonts.cdnfonts.com/css/quicksand');
+
+/* PosTrackNavbar.css */
+.main-nav-container {
+    position: fixed;
+    top: 0;
+    /* right: 5%; Adjust as needed for the desired distance from the right side */
+    height: auto;
+    width: 100%; /* Adjust the width of the sidebar as needed */
+    /* padding: 20px; Add padding to the sidebar content */
+    display: flex;
+    flex-direction: row;
+    /* align-items: flex-end; Align items to the right side of the sidebar */
+    align-items: center; /* Center items horizontally */
+    justify-content: space-between;
+    z-index: 99999;
+    margin-top: 0;
+    padding-top: 0;
+    background-color: #F0FFFF;
+  }
+  
+  .logo {
+    align-self: left;
+    width: 8%; /* Set the width of the logo as needed */
+    height: auto;
+    cursor: pointer;
+    left: 0;
+    /* margin-top: 5% */
+  }
+  
+  .button-nav {
+    background-color: transparent;
+    border: 0;
+    font-family: 'Quicksand Book', sans-serif;
+    font-size: 20px;
+    cursor: pointer;
+    margin-right: 25px;
+    font-weight: bold;
+  }
+
+  .logo:hover {
+    opacity: 50%;
+  }
+
+  .button-nav:hover {
+    color: orangered;
+    text-decoration: underline;
+  }  
+  
+  /* Add additional styling as needed */
+  
