@@ -12,7 +12,7 @@ const TeamHome = () => {
   const { team_id } = useParams();
   const [teamData, setTeamData] = useState([]);
   const [compData, setCompData] = useState([]); 
-  const [matchData, setMatchData] = useState([]);
+  const [trueSkillsData, setTrueSkillsData] = useState([]);
   const [awardsData, setAwardsData] = useState([]);
   const [skillsData, setSkillsData] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -44,8 +44,8 @@ const TeamHome = () => {
         const compInfo = await fetchPageData(team_id + "/rankings?season%5B%5D=181&per_page=250");
         setCompData(compInfo.data);
 
-        const matchInfo = await fetchPageData(team_id + "/matches?season%5B%5D=181&per_page=250");
-        setMatchData(matchInfo.data);
+        // const matchInfo = await fetchPageData(team_id + "/matches?season%5B%5D=181&per_page=250");
+        // setMatchData(matchInfo.data);
 
         const awardsInfo = await fetchPageData(team_id + "/awards?season%5B%5D=181&per_page=250");
         setAwardsData(awardsInfo.data);
@@ -60,6 +60,20 @@ const TeamHome = () => {
     fetchData();
     
   }, []);
+
+  useEffect(() => {
+    const url = `https://vrc-data-analysis.com/v1/rankings/team/229V`
+    fetch(url, {
+      headers:{}
+    })
+    .then(response => console.log(response))
+    .then(data => {
+      console.log(data)
+      setTrueSkillsData(data)
+    })
+  }, [])
+
+  console.log(trueSkillsData)
 
   if (loading) {
     return <LoadingPage />;
