@@ -107,7 +107,7 @@ const Matches = () => {
       });
 
     // Fetch rankings data
-    fetch(`${eventURL}divisions/${division_id}/rankings?per_page=150`, {
+    fetch(`${eventURL}divisions/${division_id}/rankings?per_page=250`, {
         headers: {
             Authorization: `Bearer ${accessToken}`
           }
@@ -121,6 +121,30 @@ const Matches = () => {
       });
 
     // Fetch teams data
+    const apiUrl = `https://www.robotevents.com/api/v2/events/${event_id}/teams/`;
+
+    function fetchDataForPage(page) {
+      fetch(`${apiUrl}?myTeams=false&page=${page}&per_page=250`, {
+        headers: {
+          Authorization: `Bearer ${accessToken}`
+        }
+      })
+      .then(response => response.json())
+      .then(d => setTeamsData(prevData => [...prevData, ...d.data]))
+    }
+
+    const totalPages = 5;
+
+    function fetchAllData() {
+      const fetchPromises = [];
+      for (let page = 1; page <= totalPages; page++) {
+        fetchPromises.push(fetchDataForPage(page));
+      }
+      Promise.all(fetchPromises)
+    }
+
+    fetchAllData();
+
     fetch(`${eventURL}teams?per_page=250`, {
       headers: {
           Authorization: `Bearer ${accessToken}`
@@ -201,7 +225,7 @@ const sortedTeams = () => {
 };
 
 
-
+  console.log(rankingsData)
 
   return (
     <div>
@@ -225,7 +249,7 @@ const sortedTeams = () => {
             <div className="team-container">
                 {rankingsData.map(team => (
                     <li key={team.id}>
-                        <Display number={team.team.name} name={teamsMap[team.team.name].name} ranking={team.rank} wp={team.wp} ap={team.ap} 
+                        <Display number={team.team.name} name={team.team.name} ranking={team.rank} wp={team.wp} ap={team.ap} 
                         sp={team.sp} wins={team.wins} losses={team.losses} ties={team.ties} id={team.team.id} />
                     </li>
                 ))} 
