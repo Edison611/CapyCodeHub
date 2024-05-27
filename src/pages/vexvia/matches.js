@@ -88,7 +88,7 @@ const Matches = () => {
     setActivePage(page);
   };
 
-  const accessToken = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiIzIiwianRpIjoiMGJmMTdkZmIxZWRjMmRlZGQ5MjhmM2ZkODEzZDNkNWM1ZjNjOGU3OTUwY2JhYTIzODA5YzIwNzM3OGE4ZmFjZTZiMGIyODdlMjdmODM4NjIiLCJpYXQiOjE2OTE5ODQ4MDMuMDAyNTA3OSwibmJmIjoxNjkxOTg0ODAzLjAwMjUxMSwiZXhwIjoyNjM4NzU5NjAyLjk5NzEyOTksInN1YiI6IjExNzQzOSIsInNjb3BlcyI6W119.opzagy4WRMMhh3LQQhk0Fp-2NGo37AushuMGtU4cS6VwkxhsL-YdEzq18x1ocXLxj_Ip_1J41dL3NaVgCDUkrHZRA2eR-taKXKh7OZo3W-s9PJJjGKb4RyolAIPUWiQzQKdzbbKsvXoqdFAK8zfiEE_jjMIww9eXEEzd_COI2FtIp4BBgR84ss_RsuLWcT9r0OjW810iZTBzep96KwJPQDatq6RXTMIpc04HZcYUJah1l4hAjQlpReER4CKQ7w5IdPXzdOS1He-eToEwpIKTPXKoxnAcnwdOQWiJj3RAXFf9lVM5n9s7K-OdSMTBS3LKDlzxfJHAYQwC0Wpdr4LnMol4LcyZksyVXu-bb-vxxYeYm88ziIsLeCef0l9qHf_D46_jfln2e8cpaK88VBkKQmQO3gI8PB-QY4h0hGWwO3-WLV2vR_8TwwAoaw9Hds02NCKNNRzMI7ShqRyonjcTn5O1t2BwSrwnOVDTUGYf5EFWIjEbGB8B-xuqfCFqtq9u8kzeFqszgAUzdYOomsdjB35U5mWP7shOm4HRUm5I6OEmUTu5NZnRHLP8vZpIdS1_81WT2wCdyB6qxfIn3SuJk44EklLPzN4H6KkVH74j6J5d8CkB--NY74WyQVHapmGo4Dr9siIjg4am6w2nqYjbi3zVGxSk_aBYM5PoMDHnATY';
+  const accessToken = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiIzIiwianRpIjoiYjI1YTEzMGE0ZDc2OWFhOWE5NDI0NzA1ZGRlNTA0MDVjYmFjMzBhZjdmOTIxZjJhZjhkMjM5MDNkMzVjMmRlZDgxMzIxYmEzOGUxYWEyNjEiLCJpYXQiOjE3MTY2OTU5NTcuNDU3NDI5OSwibmJmIjoxNzE2Njk1OTU3LjQ1NzQzMywiZXhwIjoyNjYzMzg0MzU3LjQ0NDA5OCwic3ViIjoiMTE3NDM5Iiwic2NvcGVzIjpbXX0.BR79T4-SK9ytb4EKCGLdHVbuXfZ8byvxYW7gJ4PeBlFMLEuo6B4ckSNjz9bGGXWmmGUg4yfIRLmIRlMvX38U5pcEx61sf2NQDHBoB8Os5YvoHM_Uef2VGMhGMrxu5c_S5IGdA0qlIKcJG1u2vbnXBBTCGSpXlUAB95WaDQ99DKVyrBOpq_68uCwzu5vRDkG34hgYOt-zG5f1-sbS6tUr2UbrYsTjhKOGtvta-uCfr740SOdLj-hzhEIeeGtBMN5jhh6i4Ag9WwJtdxDCtcAR7C4b9UaRxweWh3nzXermwkpUEdYpbpgriX2P82BXhI0QayfW6ZRVPOQdj3irm47FODzLJmaOSzNqZ35SLc3iYFUk1UnkNrbFE91ph3kBI68FRvbUDQx1zGEOZYl05tVkw5fAUNgd-AZDu78fiiq92cBr5eKe4mw2JlCLaNPF0YBmFb0WTW4kc6wcVimTHVpMYdG6PEL0UVj_rTkJYXQbRZ2BqXVwtRSdLwD-WcQC3Rbp69Iq60Rv1YZs1mnbPIj4tc1CRttQN_pLTqyH36-sEJQuzhM4-6eNiLlUGuQ4URNztstT4z3nnYFlwZGcm3UeBuD77cEwQoCpCP8hGk_KMUSfkA6Nh1A0V4xTzpIAIJyZi6nt6tmMhfxYofDC1vo5_wwpcKKsil3hF-IHFFGZuRg';
   const eventURL = `https://www.robotevents.com/api/v2/events/${event_id}/`
   // Fetch data when active page changes
   useEffect(() => {
@@ -114,6 +114,7 @@ const Matches = () => {
     })
       .then((response) => response.json())
       .then((data) => {
+        // console.log(data)
         setRankingsData(data.data.reverse());   
       })
       .catch((error) => {
@@ -137,7 +138,7 @@ const Matches = () => {
 
     function fetchAllData() {
       const fetchPromises = [];
-      for (let page = 1; page <= totalPages; page++) {
+      for (let page = 0; page <= totalPages; page++) {
         fetchPromises.push(fetchDataForPage(page));
       }
       Promise.all(fetchPromises)
@@ -161,12 +162,14 @@ const Matches = () => {
   }, [activePage]);
 
   useEffect(() => {
-    fetch('http://localhost:5000/data', {
+    // console.log(teamsData)
+    // console.log(scheduleData)
+    fetch('https://capycodehub-api.vercel.app/stats', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ teamData: teamsData, matchData: scheduleData }),
+        body: JSON.stringify({ teamData : teamsData, matchData : scheduleData}),
       })
         .then(response => response.json())
         .then(jsonData => setStatsData(jsonData))
@@ -224,9 +227,6 @@ const sortedTeams = () => {
     } 
 };
 
-
-  console.log(rankingsData)
-
   return (
     <div>
       <DivisionNavbar onDivisionClick={handlePageChange} activePage={activePage} />
@@ -261,7 +261,7 @@ const sortedTeams = () => {
           <div className="team-container">
             <div className="team-container">
                 {teamsData.map(team => (
-                    <li key={team.id}>
+                    <li key={team.id*2}>
                         <TeamsDisplay number={team.number} name={team.team_name} location={teamsMap[team.number].location} ranking={teamsMap[team.number].rank} 
                         wp={teamsMap[team.number].wp} ap={teamsMap[team.number].ap} sp={teamsMap[team.number].sp} 
                         wins={teamsMap[team.number].wins} losses={teamsMap[team.number].losses} ties={teamsMap[team.number].ties} id={team.id} />
@@ -271,25 +271,25 @@ const sortedTeams = () => {
           </div>
         )}
         {activePage === "stats" && teamsData && statsData && (
-            <div>Coming soon</div>
-            // <div className="team-container">
-            //   <tr>
-            //                 <th className="px-4 py-2 bg-gray-800 text-gray-200" onClick={() => sortByCriterion('team')}>Team</th>
-            //                 <th className="px-4 py-2 bg-gray-800 text-gray-200" onClick={() => sortByCriterion('OPR')}>OPR</th>
-            //                 <th className="px-4 py-2 bg-gray-800 text-gray-200" onClick={() => sortByCriterion('DPR')}>DPR</th>
-            //                 <th className="px-4 py-2 bg-gray-800 text-gray-200" onClick={() => sortByCriterion('CCWM')}>CCWM</th>
-            //             </tr>
-            //     {sortedTeams().map(team => (
-            //       <div key={team} className="team-stats">
-            //           <StatsDisplay team={team.team} data={{
-            //               OPR: team.data.OPR,
-            //               DPR: team.data.DPR,
-            //               CCWM: team.data.CCWM
-            //           }}
-            //           />
-            //       </div>
-            //   ))}
-            // </div>
+            // <div>Coming soon</div>
+            <div className="team-container">
+              <tr>
+                  <th className="px-4 py-2 bg-gray-800 text-gray-200" onClick={() => sortByCriterion('team')}>Team</th>
+                  <th className="px-4 py-2 bg-gray-800 text-gray-200" onClick={() => sortByCriterion('OPR')}>OPR</th>
+                  <th className="px-4 py-2 bg-gray-800 text-gray-200" onClick={() => sortByCriterion('DPR')}>DPR</th>
+                  <th className="px-4 py-2 bg-gray-800 text-gray-200" onClick={() => sortByCriterion('CCWM')}>CCWM</th>
+              </tr>
+                {sortedTeams().map(team => (
+                  <div className="team-stats">
+                      <StatsDisplay team={team.team} data={{
+                          OPR: team.data.OPR,
+                          DPR: team.data.DPR,
+                          CCWM: team.data.CCWM
+                      }}
+                      />
+                  </div>
+              ))}
+            </div>
         )}
         
       </div>  
