@@ -10,8 +10,8 @@ const ScoutingTeamsDisplay = ({ alliances, opponents }) => {
   useEffect(() => {
     const fetchDataForPage = async (id) => {
       try {
-        const response = await fetch(`https://www.robotevents.com/api/v2/teams/${id}/skills?season%5B%5D=181`, {
-          headers: {
+        const response = await fetch(`https://www.robotevents.com/api/v2/teams/${id}/skills?season%5B%5D=190`, {
+          headers: {  
             Authorization: `Bearer ${accessToken}`,
           },
         });

@@ -21,7 +21,7 @@ const TeamDisplay = ({ number, name, id }) => {
     }
     setOverlayOpen(!overlayOpen)
     const apiUrl = 'https://www.robotevents.com/api/v2/teams/';
-    fetch(`${apiUrl}${id}/skills?season%5B%5D=181`, {
+    fetch(`${apiUrl}${id}/skills?season%5B%5D=190`, {
       headers: {
         Authorization: `Bearer ${accessToken}`
       }
