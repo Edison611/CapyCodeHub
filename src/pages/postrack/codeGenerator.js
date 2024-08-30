@@ -3,7 +3,7 @@ import "../../page-styles/postrack/tracker.css";
 import "../../page-styles/postrack/codeGenerator.css";
 import { useState, useEffect, useRef } from 'react';
 import field from '../../images/HighStakesField.png'
-import skills_field from '../../images/skills-field.png'
+import skills_field from "../../images/HighStakesSkillsField.png";
 import ToggleSwitch from '../../components/ToggleSwitch';
 import BotDrawer from '../../components/BotDrawer'
 import PosTrackNavbar from "../../components/PosTrackNavbar";
