@@ -14,6 +14,7 @@ import TeamHome from './pages/teams/TeamHome.js'
 import TeamCompetition from './pages/teams/TeamCompetition.js'
 import DivisionPredictor from './pages/division-predictor.js'
 import MSDivisionPredictor from './pages/ms-division-predictor.js'
+import Test from './pages/test.js'
 
 function App() {
   return (
@@ -33,6 +34,7 @@ function App() {
         <Route path="/vexvia/teams/:team_id/:event_id" element={<TeamCompetition/>} />
         <Route path="/predictor/" element={<DivisionPredictor />} />
         <Route path="/predictorMS/" element={<MSDivisionPredictor />} />
+        <Route path='/test' element={<Test />} />
       </Routes>
     </div>
   )

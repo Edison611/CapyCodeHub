@@ -1,0 +1,34 @@
+{
+  "qualifiers": [
+    {
+      "qualifier_number": 6,
+      "alliance_teams": ["2055X", "9599C"],
+      "opponent_teams": ["416A", "16610C"]
+    },
+    {
+      "qualifier_number": 17,
+      "alliance_teams": ["41529A", "2055X"],
+      "opponent_teams": ["5298C", "416D"]
+    },
+    {
+      "qualifier_number": 33,
+      "alliance_teams": ["1505G", "97779Z"],
+      "opponent_teams": ["2055X", "21520A"]
+    },
+    {
+      "qualifier_number": 40,
+      "alliance_teams": ["2055X", "2670A"],
+      "opponent_teams": ["3150B", "3150A"]
+    },
+    {
+      "qualifier_number": 54,
+      "alliance_teams": ["3150X", "1140X"],
+      "opponent_teams": ["2055X", "1505B"]
+    },
+    {
+      "qualifier_number": 62,
+      "alliance_teams": ["5298A", "31331C"],
+      "opponent_teams": ["2055X", "81208X"]
+    }
+  ]
+}

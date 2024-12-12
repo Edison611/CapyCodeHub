@@ -1,18 +1,18 @@
 // HomePage.js
 import React from 'react';
-import logo from '../images/field.png'
 import "../page-styles/home.css"
 import "../styles/general.css"
 import "../styles/buttons.css"
 import Hero from '../components/HeroBg';
 import HeroLink from '../components/HeroLink';
 import field from '../images/field.png';
+import progField from "../images/HighStakesField.png"
 import scouting from "../images/scouting.png"
 
 const Home = () => {
   return (
     <div>
-      <Hero image={logo} title={"Capybaras (2055) Programming Website"} />
+      <Hero image={progField} title={"Capybaras (2055) Programming Website"} />
     
       <main>
       <section className="project-info">
@@ -25,7 +25,7 @@ const Home = () => {
           </div>
       </section>
 
-      <HeroLink image={field} title={"Robot Position Tracker"} text={"A webpage to help with figuring out the placement of robots"} buttons={[{name: "Robot Position Tracker", link: "/tracker"}, {name: "Path Visualizer", link: "/path-record"}, {name: "Code Generator", link: "/code-generator"}, {name: "Test", link: "/test"}]} />
+      <HeroLink image={field} title={"Robot Position Tracker"} text={"A webpage to help with figuring out the placement of robots"} buttons={[{name: "Robot Position Tracker", link: "/tracker"}, {name: "Path Visualizer", link: "/path-record"}, {name: "Code Generator", link: "/code-generator"}]} />
       <br />
       <HeroLink image={scouting} title={"Scouting"} text={"A webpage to help with scouting"} buttons={[{name: "Scouting", link: "/vexvia/teams"}, {name: "Vex Via", link: "/vexvia"}, {name: "HS Worlds Division Predictor", link: "/predictor"}, {name: "MS Worlds Division Predictor", link: "/predictorMS"}]} />
         
