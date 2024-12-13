@@ -29,6 +29,16 @@
       "qualifier_number": 42,
       "alliance_teams": ["85A", "2055A"],
       "opponent_teams": ["8682N", "7760X"]
+    },
+    {
+      "qualifier_number": 51,
+      "alliance_teams": ["2055A", "40684B"],
+      "opponent_teams": ["6008P", "9185V"]
+    },
+    {
+      "qualifier_number": 64,
+      "alliance_teams": ["2055A", "6008A"],
+      "opponent_teams": ["2011F", "99921B"]
     }
   ]
 }
