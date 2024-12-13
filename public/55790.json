@@ -1,34 +1,34 @@
 {
   "qualifiers": [
     {
-      "qualifier_number": 6,
-      "alliance_teams": ["2055X", "9599C"],
-      "opponent_teams": ["416A", "16610C"]
+      "qualifier_number": 1,
+      "alliance_teams": ["2055A", "55286A"],
+      "opponent_teams": ["2011C", "39V"]
     },
     {
       "qualifier_number": 17,
-      "alliance_teams": ["41529A", "2055X"],
-      "opponent_teams": ["5298C", "416D"]
+      "alliance_teams": ["355Z", "81208X"],
+      "opponent_teams": ["2055A", "839Z"]
     },
     {
-      "qualifier_number": 33,
-      "alliance_teams": ["1505G", "97779Z"],
-      "opponent_teams": ["2055X", "21520A"]
+      "qualifier_number": 25,
+      "alliance_teams": ["96715B", "2055A"],
+      "opponent_teams": ["839Z", "3004A"]
     },
     {
-      "qualifier_number": 40,
-      "alliance_teams": ["2055X", "2670A"],
-      "opponent_teams": ["3150B", "3150A"]
+      "qualifier_number": 30,
+      "alliance_teams": ["10102C", "1165A"],
+      "opponent_teams": ["9185C", "2055A"]
     },
     {
-      "qualifier_number": 54,
-      "alliance_teams": ["3150X", "1140X"],
-      "opponent_teams": ["2055X", "1505B"]
+      "qualifier_number": 34,
+      "alliance_teams": ["7760X", "7700K"],
+      "opponent_teams": ["2055A", "96715D"]
     },
     {
-      "qualifier_number": 62,
-      "alliance_teams": ["5298A", "31331C"],
-      "opponent_teams": ["2055X", "81208X"]
+      "qualifier_number": 42,
+      "alliance_teams": ["85A", "2055A"],
+      "opponent_teams": ["8682N", "7760X"]
     }
   ]
 }
