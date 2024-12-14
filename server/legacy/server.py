@@ -6,6 +6,42 @@ from flask_cors import CORS, cross_origin
 
 app = Flask(__name__)
 CORS(app, support_credentials=True)
+
+@app.route('/')
+@cross_origin(supports_credentials=True)
+def get_schedule():
+    # API endpoint
+    url = "https://www.robotevents.com/api/v2/teams/140100/matches?event%5B%5D=55647"
+
+    # Make the API request
+    try:
+        response = requests.get(url)
+        response.raise_for_status()  # Will raise an exception for HTTP errors
+
+        # Print the response data to console
+        print(response.json())  # You can process this data further if needed
+
+        # Return a response to the browser
+        return "API response printed in the console"
+    
+    except requests.exceptions.RequestException as e:
+        # Handle errors
+        print(f"Error making request: {e}")
+        return f"Error making request: {e}"
+@app.route('/api/save-json', methods=['POST'])
+def save_json():
+    try:
+        data = request.json
+        file_path = os.path.join("public", "data.json")
+
+        with open(file_path, 'w') as f:
+            json.dump(data, f, indent=2)
+
+        return jsonify({"message": "File saved successfully"}), 200
+    except Exception as e:
+        print(f"Error: {e}")
+        return jsonify({"message": "Failed to save file", "error": str(e)}), 500
+
 @app.route('/data', methods=['POST'])
 @cross_origin(supports_credentials=True)
 
@@ -90,4 +126,5 @@ def data():
 
 if __name__ == '__main__':
     app.run(debug=True)
+
     
