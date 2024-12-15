@@ -1,6 +1,6 @@
 import requests
 import json
-
+import os
 def fetch_schedule():
     # API endpoint
     url = "https://www.robotevents.com/api/v2/teams/140100/matches?event%5B%5D=55647"
@@ -21,27 +21,45 @@ def fetch_schedule():
             data = response_json.get('data') 
     
             if data:
-                print(json.dumps(data, indent=4))
+            #    print(json.dumps(data, indent=4))
                 print_json(data)  # Pretty print the data
             else:
                 print("No 'data' key found in the response.")
     else:
             print(f"Failed to fetch data. Status code: {response.status_code}")
+def get_team(alliance):
+    team=[]
+    teams = alliance.get('teams', [])
+    for team_entry in teams:
+        team_name = team_entry.get('team', {}).get('name')  # Extract team name
+        if team_name:
+            team.append(team_name)
+    return team
 # Call the function
 def print_json(data):
-    round_alliances = []
+    round_alliances = {"qualifiers": []}
     for match in data:
-        round_number = match.get("round")
-        for alliance in match.get("alliances", []):
-            color = alliance.get("color")
-            team_names = [team["team"]["name"] for team in alliance.get("teams", [])]
-            round_alliances.append({
-            "round": round_number,
-            "color": color,
-            "teams": team_names
-        })
+        round_number = match.get("matchnum")
+        alliances = match.get('alliances', [])
+        for alliance in alliances:
+            if alliance.get('color') == 'red':
+                 red_teams=get_team(alliance)
+            if alliance.get('color') == 'blue':
+                 blue_teams=get_team(alliance)             
+        qualifier = {'qualifier_number': round_number,
+                     'alliance_teams':red_teams,
+                    'opponent_teams': blue_teams}
+        round_alliances["qualifiers"].append(qualifier)
+    
+# Define the path to the public folder
+    file_path = os.path.join("public", "data.json")
 
-# Print extracted data
-    for entry in round_alliances:
-        print(entry) 
+# Ensure the public folder exists
+    os.makedirs(os.path.dirname(file_path), exist_ok=True)
+
+# Save round_alliances to data.json
+    with open(file_path, "w") as json_file:
+        json.dump(round_alliances, json_file, indent=2)
+
+    print(f"Data has been saved to {file_path}")
 fetch_schedule()
