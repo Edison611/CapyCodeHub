@@ -3,7 +3,7 @@ import json
 import os
 def fetch_schedule():
     # API endpoint
-    url = "https://www.robotevents.com/api/v2/teams/140100/matches?event%5B%5D=55647"
+    url = "https://www.robotevents.com/api/v2/teams/154288/matches?event%5B%5D=55650"
     
 
         # Make the API request
@@ -53,9 +53,6 @@ def print_json(data):
     
 # Define the path to the public folder
     file_path = os.path.join("public", "data.json")
-
-# Ensure the public folder exists
-    os.makedirs(os.path.dirname(file_path), exist_ok=True)
 
 # Save round_alliances to data.json
     with open(file_path, "w") as json_file:
