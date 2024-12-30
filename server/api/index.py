@@ -1,6 +1,5 @@
 # Flask Server
 import numpy as np
-# import requests
 from flask import Flask, jsonify, request
 from flask_cors import CORS, cross_origin
 # from stats import stats
@@ -11,7 +10,6 @@ CORS(app, support_credentials=True)
 
 @app.route('/', methods=['GET'])
 def test():
-    # print(np.__version__)
     return jsonify({'message': 'Hello World'})
 
 @app.route('/stats', methods=['POST'])
@@ -94,7 +92,7 @@ def stats_function():
     allData = {'OPR': teamsOPR, 'DPR': teamsDPR, 'CCWM': teamsCCWM}
     return jsonify(allData)
 
-
+# For Testing Purposes
 # if __name__ == '__main__':
 #     app.run(debug=True)
     
