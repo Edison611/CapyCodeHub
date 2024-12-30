@@ -23,6 +23,12 @@ const Home = () => {
     }
   };
 
+  const testFetch = async () => {
+    const response = await fetch('https://localhost:5000/test')
+    const testResponse = await response.json()
+    console.log(testResponse)
+  }
+
   return (
     <div>
       <Hero image={logo} title={"Capybaras (2055) Programming Website"} />
@@ -50,7 +56,8 @@ const Home = () => {
 
           {/* Schedule button added to the Contact section */}
           <div className="schedule-button">
-            <button onClick={fetchSchedule}>Schedule</button>
+            <button onClick={testFetch}Test></button>
+            {/* <button onClick={fetchSchedule}>Schedule</button> */}
           </div>
         </section>
       </main>

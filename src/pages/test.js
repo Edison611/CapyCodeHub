@@ -11,7 +11,7 @@ function FrameEditor() {
     const loadData = async () => {
       try {
         console.log("Loading data.json...");
-        const response = await fetch('55790.json'); // Fetch data from the public folder
+        const response = await fetch('data.json'); // Fetch data from the public folder
         if (!response.ok) {
           throw new Error(`HTTP error! Status: ${response.status}`);
         }

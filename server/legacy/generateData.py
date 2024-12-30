@@ -1,6 +1,11 @@
+from flask import Flask, jsonify
 import requests
 import json
 import os
+
+app = Flask(__name__)
+
+@app.route('/fetch_schedule', methods=['GET'])
 def fetch_schedule():
     # API endpoint
     url = "https://www.robotevents.com/api/v2/teams/140100/matches?event%5B%5D=55647"
@@ -27,6 +32,8 @@ def fetch_schedule():
                 print("No 'data' key found in the response.")
     else:
             print(f"Failed to fetch data. Status code: {response.status_code}")
+    return jsonify("received: No 'data' key found in the response")
+
 def get_team(alliance):
     team=[]
     teams = alliance.get('teams', [])
@@ -62,4 +69,7 @@ def print_json(data):
         json.dump(round_alliances, json_file, indent=2)
 
     print(f"Data has been saved to {file_path}")
-fetch_schedule()
+
+if __name__ == '__main__':
+    # Ensure the public folder exists
+    app.run(debug=True)
