@@ -8,7 +8,7 @@ app = Flask(__name__)
 CORS(app, support_credentials=True)
 @cross_origin(supports_credentials=True)
 
-@app.route('/', methods=['GET'])
+@app.route('/test1', methods=['GET'])
 def test():
     return jsonify({'message': 'Hello World'})
 
@@ -92,7 +92,7 @@ def stats_function():
     allData = {'OPR': teamsOPR, 'DPR': teamsDPR, 'CCWM': teamsCCWM}
     return jsonify(allData)
 
-# For Testing Purposes
-# if __name__ == '__main__':
-#     app.run(debug=True)
+#For Testing Purposes
+if __name__ == '__main__':
+    app.run(debug=True)
     

@@ -54,6 +54,6 @@ def get_team(alliance):
             team.append(team_name)
     return team
 
-if __name__ == '__main__':
-    # Ensure the public folder exists
-    app.run(debug=True)
+# if __name__ == '__main__':
+#     # Ensure the public folder exists
+#     app.run(debug=True)
