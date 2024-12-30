@@ -1,98 +1,59 @@
-# Flask Server
-import numpy as np
-from flask import Flask, jsonify, request
-from flask_cors import CORS, cross_origin
-# from stats import stats
+from flask import Flask, jsonify
+import requests
+import json
+import os
 
 app = Flask(__name__)
-CORS(app, support_credentials=True)
-@cross_origin(supports_credentials=True)
 
-@app.route('/test1', methods=['GET'])
-def test():
-    return jsonify({'message': 'Hello World'})
+# API access token
+ACCESS_TOKEN = "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiIzIiwianRpIjoiMGJmMTdkZmIxZWRjMmRlZGQ5MjhmM2ZkODEzZDNkNWM1ZjNjOGU3OTUwY2JhYTIzODA5YzIwNzM3OGE4ZmFjZTZiMGIyODdlMjdmODM4NjIiLCJpYXQiOjE2OTE5ODQ4MDMuMDAyNTA3OSwibmJmIjoxNjkxOTg0ODAzLjAwMjUxMSwiZXhwIjoyNjM4NzU5NjAyLjk5NzEyOTksInN1YiI6IjExNzQzOSIsInNjb3BlcyI6W119.opzagy4WRMMhh3LQQhk0Fp-2NGo37AushuMGtU4cS6VwkxhsL-YdEzq18x1ocXLxj_Ip_1J41dL3NaVgCDUkrHZRA2eR-taKXKh7OZo3W-s9PJJjGKb4RyolAIPUWiQzQKdzbbKsvXoqdFAK8zfiEE_jjMIww9eXEEzd_COI2FtIp4BBgR84ss_RsuLWcT9r0OjW810iZTBzep96KwJPQDatq6RXTMIpc04HZcYUJah1l4hAjQlpReER4CKQ7w5IdPXzdOS1He-eToEwpIKTPXKoxnAcnwdOQWiJj3RAXFf9lVM5n9s7K-OdSMTBS3LKDlzxfJHAYQwC0Wpdr4LnMol4LcyZksyVXu-bb-vxxYeYm88ziIsLeCef0l9qHf_D46_jfln2e8cpaK88VBkKQmQO3gI8PB-QY4h0hGWwO3-WLV2vR_8TwwAoaw9Hds02NCKNNRzMI7ShqRyonjcTn5O1t2BwSrwnOVDTUGYf5EFWIjEbGB8B-xuqfCFqtq9u8kzeFqszgAUzdYOomsdjB35U5mWP7shOm4HRUm5I6OEmUTu5NZnRHLP8vZpIdS1_81WT2wCdyB6qxfIn3SuJk44EklLPzN4H6KkVH74j6J5d8CkB--NY74WyQVHapmGo4Dr9siIjg4am6w2nqYjbi3zVGxSk_aBYM5PoMDHnATY"
 
-@app.route('/stats', methods=['POST'])
-def stats_function():
-    data = request.get_json()
-    matchData = data['matchData']
-    teamData = data['teamData']
-    if len(matchData) == 0 or len(teamData) == 0:
-        return jsonify({})
+@app.route('/fetch_schedule', methods=['GET'])
+def fetch_schedule():
+    url = "https://www.robotevents.com/api/v2/teams/140100/matches?event%5B%5D=55647"
+    headers = {"Authorization": f"Bearer {ACCESS_TOKEN}"}
 
-    # Helper Maps Initialization
-    numToTeam = {}
-    teamToNum = {}
-    for i in range(len(teamData)):
-        info = teamData[i]
-        numToTeam[i] = info['number']
-        teamToNum[info['number']] = i
+    response = requests.get(url, headers=headers)
 
-    oprArr = []
-    oprScores = []
+    if response.status_code == 200:
+        response_json = response.json()
+        data = response_json.get('data')
 
-    dprArr = []
-    dprScores = []
+        if data:
+            round_alliances = {"qualifiers": []}
+            for match in data:
+                round_number = match.get("matchnum")
+                alliances = match.get('alliances', [])
+                red_teams, blue_teams = [], []
 
-    for match in matchData:
-        if match['round'] != 2:
-            continue
-        r1 = [0 for _ in range(len(teamData))]
-        r2 = [0 for _ in range(len(teamData))]
-        team1, team2 = [], []
-        a1 = match['alliances'][0]
-        a2 = match['alliances'][1]
+                for alliance in alliances:
+                    if alliance.get('color') == 'red':
+                        red_teams = get_team(alliance)
+                    if alliance.get('color') == 'blue':
+                        blue_teams = get_team(alliance)
 
-        t1, t2 = match['alliances'][0]['teams'][0]['team']['name'], match['alliances'][0]['teams'][1]['team']['name']
-        t3, t4 = match['alliances'][1]['teams'][0]['team']['name'], match['alliances'][1]['teams'][1]['team']['name']
+                qualifier = {
+                    'qualifier_number': round_number,
+                    'alliance_teams': red_teams,
+                    'opponent_teams': blue_teams
+                }
+                round_alliances["qualifiers"].append(qualifier)
 
-        r1[teamToNum[t1]], r1[teamToNum[t2]] = 1, 1
-        oprArr.append(r1)
-        oprScores.append(a1['score'])
-        dprArr.append(r1)
-        dprScores.append(a2['score'])
+            return jsonify(round_alliances)
+        else:
+            return jsonify({"error": "No 'data' key found in the response."}), 404
+    else:
+        return jsonify({"error": f"Failed to fetch data. Status code: {response.status_code}"}), response.status_code
 
-        r2[teamToNum[t3]], r2[teamToNum[t4]] = 1, 1
-        oprArr.append(r2)
-        oprScores.append(a2['score'])
-        dprArr.append(r2)
-        dprScores.append(a1['score'])
+def get_team(alliance):
+    team = []
+    teams = alliance.get('teams', [])
+    for team_entry in teams:
+        team_name = team_entry.get('team', {}).get('name')
+        if team_name:
+            team.append(team_name)
+    return team
 
-    # Convert to Numpy for more vector functions
-    oprArr = np.array(oprArr)
-    oprScores = np.array(oprScores)
-    dprArr = np.array(dprArr)
-    oprScores = np.array(oprScores)
-
-    # Transpose Array
-    oprTranspose = np.transpose(oprArr)
-    oprLS = np.matmul(oprTranspose, oprArr)
-    dprTranspose = np.transpose(dprArr)
-    dprLS = np.matmul(dprTranspose, dprArr)
-    # print(LS)
-
-    # Scores of Matches Array
-    oprRS = np.matmul(oprTranspose, oprScores)
-    dprRS = np.matmul(dprTranspose, dprScores)
-    # print(RS)
-
-    oprX = np.linalg.lstsq(oprLS, oprRS, rcond=None)
-    dprX = np.linalg.lstsq(dprLS, dprRS, rcond=None)
-
-    teamsOPR = {}
-    teamsDPR = {}
-    for i in range(len(oprX[0])):
-        teamsDPR[numToTeam[i]] = round(dprX[0][i], 3)
-        teamsOPR[numToTeam[i]] = round(oprX[0][i], 3)
-    
-    teamsCCWM = {}
-    for i in teamsOPR:
-        teamsCCWM[i] = round(teamsOPR[i] - teamsDPR[i], 3)
-
-    allData = {'OPR': teamsOPR, 'DPR': teamsDPR, 'CCWM': teamsCCWM}
-    return jsonify(allData)
-
-#For Testing Purposes
 if __name__ == '__main__':
+    # Ensure the public folder exists
     app.run(debug=True)
-    
