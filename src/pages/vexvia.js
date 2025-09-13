@@ -23,7 +23,7 @@ function Vexvia() {
 
     function fetchDataForPage(page){
 
-      fetch(`${apiUrl}?page=${page}&per_page=250&season%5B%5D=190&eventTypes%5B%5D=tournament`, {
+      fetch(`${apiUrl}?page=${page}&per_page=250&season%5B%5D=197&eventTypes%5B%5D=tournament`, {
         headers: {
           Authorization: `Bearer ${accessToken}`
         }
