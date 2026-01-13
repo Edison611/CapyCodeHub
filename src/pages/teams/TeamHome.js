@@ -38,16 +38,16 @@ const TeamHome = () => {
         const teamInfo = await fetchPageData(team_id);
         setTeamData(teamInfo);
 
-        const skillsInfo = await fetchPageData(team_id + "/skills?season%5B%5D=190&per_page=250");
+        const skillsInfo = await fetchPageData(team_id + "/skills?season%5B%5D=197&per_page=250");
         setSkillsData(skillsInfo.data);
 
-        const compInfo = await fetchPageData(team_id + "/rankings?season%5B%5D=190&per_page=250");
+        const compInfo = await fetchPageData(team_id + "/rankings?season%5B%5D=197&per_page=250");
         setCompData(compInfo.data);
 
-        const matchInfo = await fetchPageData(team_id + "/matches?season%5B%5D=190&per_page=250");
+        const matchInfo = await fetchPageData(team_id + "/matches?season%5B%5D=197&per_page=250");
         setMatchData(matchInfo.data);
 
-        const awardsInfo = await fetchPageData(team_id + "/awards?season%5B%5D=190&per_page=250");
+        const awardsInfo = await fetchPageData(team_id + "/awards?season%5B%5D=197&per_page=250");
         setAwardsData(awardsInfo.data);
 
         setLoading(false);

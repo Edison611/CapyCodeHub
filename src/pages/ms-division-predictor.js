@@ -45,7 +45,7 @@ const MSDivisionPredictor = () => {
     const apiUrl = 'https://www.robotevents.com/api/v2/events/58910/teams/';
 
     function fetchDataForPage(page) {
-      fetch(`${apiUrl}?myTeams=false&page=${page}&per_page=250`, {
+      fetch(`${apiUrl}?season[]=197&myTeams=false&page=${page}&per_page=250`, {
         headers: {
           Authorization: `Bearer ${accessToken}`
         }

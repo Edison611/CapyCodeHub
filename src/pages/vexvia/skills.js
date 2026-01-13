@@ -74,7 +74,7 @@ const Skills = () => {
   useEffect(() => {
     // Fetch rankings data
     async function fetchData() {
-      fetch(`${eventURL}?per_page=250`, {
+      fetch(`${eventURL}?season[]=197&per_page=250`,{
         headers: {
           Authorization: `Bearer ${accessToken}`
         }

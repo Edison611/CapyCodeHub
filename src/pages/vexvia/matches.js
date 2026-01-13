@@ -121,8 +121,7 @@ const Matches = () => {
         console.error("Error fetching rankings data:", error);
       });
 
-    // Fetch teams data
-    const apiUrl = `https://www.robotevents.com/api/v2/events/${event_id}/teams/`;
+    const apiUrl = `https://www.robotevents.com/api/v2/teams?number[]=${inputText}&program[]=1&season[]=197&myTeams=false&registered=true`;
 
     function fetchDataForPage(page) {
       fetch(`${apiUrl}?myTeams=false&page=${page}&per_page=250`, {
