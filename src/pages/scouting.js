@@ -26,7 +26,7 @@ function Scouting() {
 
   const handleKeyPress = (e) => {
     if (e.key === 'Enter') {
-      const apiUrl = `https://www.robotevents.com/api/v2/teams?number%5B%5D=${inputText}&program%5B%5D=1&myTeams=false&registered=true`;
+      const apiUrl = `https://www.robotevents.com/api/v2/teams?number[]=${inputText}&program[]=1&season[]=197&myTeams=false&registered=true`;
 
     try {
       fetch(`${apiUrl}`, {
