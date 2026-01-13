@@ -1,7 +1,7 @@
 import React from "react";
 import "../../page-styles/postrack/tracker.css";
 import { useState, useEffect } from 'react';
-import field from '../../images/PushBackField.png'
+import field from '../../images/newPushBack2.png'
 import skills_field from "../../images/PushBackSkillsField.png";
 import ToggleSwitch from '../../components/ToggleSwitch';
 import BotDrawer from '../../components/BotDrawer'
