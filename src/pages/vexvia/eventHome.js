@@ -31,7 +31,12 @@ const EventHome = () => {
     })
       .then(response => response.json())
       .then(data => {
-        setEventData(data);
+        // RobotEvents API returns { data: [...] }
+        if (data && Array.isArray(data.data) && data.data.length > 0) {
+          setEventData(data.data[0]);
+        } else {
+          setEventData(null);
+        }
         setLoading(false);
       })
       .catch(error => {
@@ -63,23 +68,25 @@ const EventHome = () => {
     return <div>An error occurred: {error.message}</div>;
   }
 
-  const date = eventData.start.slice(0,10) + " → " + eventData.end.slice(0,10)
-  const address = eventData.location.city + ", " + eventData.location.region + ", " + eventData.location.country
-  const divisions = eventData.divisions
+  if (!eventData) {
+    return <div>No event data found.</div>;
+  }
+
+  const date = eventData.start?.slice(0,10) + " → " + eventData.end?.slice(0,10);
+  const address = eventData.location?.city + ", " + eventData.location?.region + ", " + eventData.location?.country;
+  const divisions = eventData.divisions;
   // console.log(eventData)
 
   return (
-  <div>
-    <div className="event-details-custom-bg">
-      {eventData && (
+    <div>
+      <div className="event-details-custom-bg">
         <div className="event-details">
           <div className="event-title">{eventData.name}</div>
           <div className="event-info">{date}</div>
           <div className="event-info">{address}</div>
           <div className="event-info"><strong>{eventData.level} Event</strong></div>
         </div>
-      )}
-    </div>
+      </div>
     <div className="event-details-columns">
         <div className="event-details-left">
           <h2>Divisions</h2>
