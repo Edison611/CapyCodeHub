@@ -20,7 +20,7 @@ function App() {
   return (
     <div className='App'>
       <Routes>
-        <Route path="/" element={<Home />} />
+        <Route path="/" element={<Home />} /> 
         <Route path="/tracker" element={<Tracker />} />
         <Route path="/path-record" element={<PathRecord />} />
         <Route path="/code-generator" element={<CodeGenerator />} />
