@@ -121,7 +121,7 @@ const Matches = () => {
         console.error("Error fetching rankings data:", error);
       });
 
-    const apiUrl = `https://www.robotevents.com/api/v2/teams?program[]=1&season[]=197&myTeams=false&registered=true`;
+    const apiUrl = `https://www.robotevents.com/api/v2/teams?program[]=1&season[]=197&myTeams=false&registered=true`; // TODO: 204 for 2026-2027 override season
 
     function fetchDataForPage(page) {
       fetch(`${apiUrl}?myTeams=false&page=${page}&per_page=250`, {
