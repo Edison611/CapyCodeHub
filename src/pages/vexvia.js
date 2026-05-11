@@ -23,7 +23,7 @@ function Vexvia() {
 
     function fetchDataForPage(page){
 
-      fetch(`${apiUrl}?page=${page}&per_page=250&season%5B%5D=197&eventTypes%5B%5D=tournament`, { // TODO: 204 for 2026-2027 override season
+      fetch(`${apiUrl}?page=${page}&per_page=250&season%5B%5D=204&eventTypes%5B%5D=tournament`, { // TODO: 204 for 2026-2027 override season
         headers: {
           Authorization: `Bearer ${accessToken}`
         }
