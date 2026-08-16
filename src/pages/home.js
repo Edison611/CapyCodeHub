@@ -1,6 +1,6 @@
 // HomePage.js
 import React from 'react';
-import logo from '../images/field.png'
+import logo from '../images/IG.png'
 import "../page-styles/home.css"
 import "../styles/general.css"
 import "../styles/buttons.css"
