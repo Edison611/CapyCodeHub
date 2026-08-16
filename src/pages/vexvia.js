@@ -5,6 +5,7 @@ import '../page-styles/vexvia.css'
 import { useNavigate } from "react-router-dom";
 import logo from "../images/logo.png"
 import LoadingPage from '../components/Loading';
+import { API_BASE_URL } from '../constants';
 
 function Vexvia() {
   const navigate = useNavigate();
@@ -19,7 +20,7 @@ function Vexvia() {
 
   // Fetches team data
   useEffect(() => {
-    const apiUrl = 'https://www.robotevents.com/api/v2/events';
+    const apiUrl = `${API_BASE_URL}/events`;
 
     function fetchDataForPage(page){
 
