@@ -4,6 +4,7 @@ import DivisionNavbar from "./DivisionNavbar";
 import "../../page-styles/vexvia/matches.css"
 import DropdownMenuComponent from "./Dropdown";
 import { API_BASE_URL } from '../../constants';
+import { useSeason } from '../../context/SeasonContext';
 
 const Display = ({ number, name, ranking, wp, ap, sp, wins, losses, ties, id }) => {
   const { event_id } = useParams();
@@ -76,6 +77,7 @@ const Matches = () => {
   const { event_id } = useParams();
   const { division_id } = useParams();
   const [activePage, setActivePage] = useState("schedule"); // Default active page
+  const { season } = useSeason();
 
   // Use state to store fetched data
   const [scheduleData, setScheduleData] = useState(null);
@@ -122,7 +124,7 @@ const Matches = () => {
         console.error("Error fetching rankings data:", error);
       });
 
-    const apiUrl = `${API_BASE_URL}/teams?program[]=1&season[]=197&myTeams=false&registered=true`; // TODO: 204 for 2026-2027 override season
+    const apiUrl = `${API_BASE_URL}/teams?program[]=1&season[]=${season}&myTeams=false&registered=true`;
 
     function fetchDataForPage(page) {
       fetch(`${apiUrl}?myTeams=false&page=${page}&per_page=250`, {
@@ -159,7 +161,7 @@ const Matches = () => {
         console.error("Error fetching teams data:", error);
       });
       
-  }, [activePage]);
+  }, [activePage, season]);
 
   useEffect(() => {
     // console.log(teamsData)

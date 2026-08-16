@@ -1,0 +1,20 @@
+.season-selector {
+  font-family: 'Quicksand Book', sans-serif;
+  font-size: 0.95rem;
+  padding: 0.4rem 0.75rem;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  background-color: #fff;
+  color: #333;
+  cursor: pointer;
+}
+
+.season-selector:hover {
+  border-color: #999;
+}
+
+.season-selector:focus {
+  outline: none;
+  border-color: #666;
+  box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.1);
+}

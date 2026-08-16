@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import "../../page-styles/vexvia/matches.css";
 import { API_BASE_URL } from '../../constants';
+import { useSeason } from '../../context/SeasonContext';
 
 const DivisionNavbar = ({ onDivisionClick, activePage }) => {
     const handlePageChange = (page) => {
@@ -58,6 +59,7 @@ const Display = ({ number, ranking, driver, prog, bold, rankFor }) => {
 const Skills = () => {
   const { event_id } = useParams();
   const [activeTab, setActiveTab] = useState("byRank"); // Default active tab
+  const { season } = useSeason();
 
   // Use state to store fetched data
   const [rankingsData, setRankingsData] = useState([]);
@@ -75,7 +77,7 @@ const Skills = () => {
   useEffect(() => {
     // Fetch rankings data
     async function fetchData() {
-      fetch(`${eventURL}?season[]=197&per_page=250`,{
+      fetch(`${eventURL}?season[]=${season}&per_page=250`,{
         headers: {
           Authorization: `Bearer ${accessToken}`
         }
@@ -92,7 +94,7 @@ const Skills = () => {
     }
     fetchData();
     
-  }, []);
+  }, [event_id, season]);
 
   useEffect(() => {
     rankingsData.forEach((team) => {

@@ -6,10 +6,13 @@ import { useNavigate } from "react-router-dom";
 import logo from "../images/logo.png"
 import LoadingPage from '../components/Loading';
 import { API_BASE_URL } from '../constants';
+import { useSeason } from '../context/SeasonContext';
+import SeasonSelector from '../components/SeasonSelector';
 
 function Vexvia() {
   const navigate = useNavigate();
   const [inputText, setInputText] = useState("");
+  const { season } = useSeason();
 
   var [events, setEvents] = useState([]);
   const [error, setError] = useState(null);
@@ -20,11 +23,13 @@ function Vexvia() {
 
   // Fetches team data
   useEffect(() => {
+    setEvents([]);
+    setLoading(true);
     const apiUrl = `${API_BASE_URL}/events`;
 
     function fetchDataForPage(page){
 
-      fetch(`${apiUrl}?page=${page}&per_page=250&season%5B%5D=197&eventTypes%5B%5D=tournament`, { // TODO: 204 for 2026-2027 override season
+      fetch(`${apiUrl}?page=${page}&per_page=250&season%5B%5D=${season}&eventTypes%5B%5D=tournament`, {
         headers: {
           Authorization: `Bearer ${accessToken}`
         }
@@ -54,7 +59,7 @@ function Vexvia() {
     
 
     
-  }, [accessToken]);
+  }, [accessToken, season]);
 
 
   const filteredData = (events.filter((el) => {
@@ -105,6 +110,9 @@ function Vexvia() {
   
   return (
     <div className="main">
+      <div style={{ display: 'flex', justifyContent: 'flex-end', padding: '0.75rem 0' }}>
+        <SeasonSelector />
+      </div>
       <img src={logo} onClick={ () => navigate("/")} alt="" className='logo2'></img>
       <div className='mb-4 text-3xl font-bold leading-none tracking-tight text-gray-900 md:text-5xl lg:text-5xl pt-10'>Events</div>
       <div className="search">

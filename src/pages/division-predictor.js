@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import LoadingPage from '../components/Loading';
 import { API_BASE_URL } from '../constants';
+import { useSeason } from '../context/SeasonContext';
 
 // Individual Team Component
 const TeamItem = ({ team }) => {
@@ -38,6 +39,7 @@ const DivisionPredictor = () => {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const { season } = useSeason();
 
   const divisions = 10;
 
@@ -47,7 +49,7 @@ const DivisionPredictor = () => {
     const apiUrl = `${API_BASE_URL}/events/58909/teams/`;
 
     function fetchDataForPage(page) {
-      fetch(`${apiUrl}?season[]=197&myTeams=false&page=${page}&per_page=250`, {
+      fetch(`${apiUrl}?season[]=${season}&myTeams=false&page=${page}&per_page=250`, {
         headers: {
           Authorization: `Bearer ${accessToken}`
         }
@@ -72,7 +74,7 @@ const DivisionPredictor = () => {
     }
 
     fetchAllData();
-  }, [accessToken]);
+  }, [accessToken, season]);
 
   const sortByMixedString = (array, propertyName) => {
     return array.sort((a, b) => {
