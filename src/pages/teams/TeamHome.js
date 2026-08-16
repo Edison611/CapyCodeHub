@@ -5,6 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import SkillsDisplay from '../../components/SkillsDisplay';
 import CompetitionDisplay from '../../components/CompetitionsDisplay'
 import LoadingPage from '../../components/Loading';
+import { API_BASE_URL } from '../../constants';
 
 const TeamHome = () => {
   const navigate = useNavigate();
@@ -22,7 +23,7 @@ const TeamHome = () => {
 
   useEffect(() => {
     async function fetchPageData(path) {
-      const apiUrl = `https://www.robotevents.com/api/v2/teams/${path}`;
+      const apiUrl = `${API_BASE_URL}/teams/${path}`;
   
       const response = await fetch(apiUrl, {
         headers: {

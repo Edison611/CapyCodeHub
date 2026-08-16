@@ -5,6 +5,7 @@ import '../page-styles/scouting.css'
 import { useNavigate } from "react-router-dom";
 import logo from "../images/logo.png"
 import LoadingPage from '../components/Loading';
+import { API_BASE_URL } from '../constants';
 
 function Scouting() {
   const navigate = useNavigate();
@@ -26,7 +27,7 @@ function Scouting() {
 
   const handleKeyPress = (e) => {
     if (e.key === 'Enter') {
-      const apiUrl = `https://www.robotevents.com/api/v2/teams?number[]=${inputText}&program[]=1&myTeams=false`;
+      const apiUrl = `${API_BASE_URL}/teams?number[]=${inputText}&program[]=1&myTeams=false`;
 
     try {
       console.log("Fetching data for team number:", apiUrl);
