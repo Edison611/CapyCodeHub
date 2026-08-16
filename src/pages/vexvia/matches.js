@@ -3,6 +3,7 @@ import { useParams, useNavigate } from "react-router-dom";
 import DivisionNavbar from "./DivisionNavbar";
 import "../../page-styles/vexvia/matches.css"
 import DropdownMenuComponent from "./Dropdown";
+import { API_BASE_URL } from '../../constants';
 
 const Display = ({ number, name, ranking, wp, ap, sp, wins, losses, ties, id }) => {
   const { event_id } = useParams();
@@ -89,7 +90,7 @@ const Matches = () => {
   };
 
   const accessToken = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiIzIiwianRpIjoiYjI1YTEzMGE0ZDc2OWFhOWE5NDI0NzA1ZGRlNTA0MDVjYmFjMzBhZjdmOTIxZjJhZjhkMjM5MDNkMzVjMmRlZDgxMzIxYmEzOGUxYWEyNjEiLCJpYXQiOjE3MTY2OTU5NTcuNDU3NDI5OSwibmJmIjoxNzE2Njk1OTU3LjQ1NzQzMywiZXhwIjoyNjYzMzg0MzU3LjQ0NDA5OCwic3ViIjoiMTE3NDM5Iiwic2NvcGVzIjpbXX0.BR79T4-SK9ytb4EKCGLdHVbuXfZ8byvxYW7gJ4PeBlFMLEuo6B4ckSNjz9bGGXWmmGUg4yfIRLmIRlMvX38U5pcEx61sf2NQDHBoB8Os5YvoHM_Uef2VGMhGMrxu5c_S5IGdA0qlIKcJG1u2vbnXBBTCGSpXlUAB95WaDQ99DKVyrBOpq_68uCwzu5vRDkG34hgYOt-zG5f1-sbS6tUr2UbrYsTjhKOGtvta-uCfr740SOdLj-hzhEIeeGtBMN5jhh6i4Ag9WwJtdxDCtcAR7C4b9UaRxweWh3nzXermwkpUEdYpbpgriX2P82BXhI0QayfW6ZRVPOQdj3irm47FODzLJmaOSzNqZ35SLc3iYFUk1UnkNrbFE91ph3kBI68FRvbUDQx1zGEOZYl05tVkw5fAUNgd-AZDu78fiiq92cBr5eKe4mw2JlCLaNPF0YBmFb0WTW4kc6wcVimTHVpMYdG6PEL0UVj_rTkJYXQbRZ2BqXVwtRSdLwD-WcQC3Rbp69Iq60Rv1YZs1mnbPIj4tc1CRttQN_pLTqyH36-sEJQuzhM4-6eNiLlUGuQ4URNztstT4z3nnYFlwZGcm3UeBuD77cEwQoCpCP8hGk_KMUSfkA6Nh1A0V4xTzpIAIJyZi6nt6tmMhfxYofDC1vo5_wwpcKKsil3hF-IHFFGZuRg';
-  const eventURL = `https://www.robotevents.com/api/v2/events/${event_id}/`
+  const eventURL = `${API_BASE_URL}/events/${event_id}/`
   // Fetch data when active page changes
   useEffect(() => {
     // Fetch schedule data
@@ -121,7 +122,7 @@ const Matches = () => {
         console.error("Error fetching rankings data:", error);
       });
 
-    const apiUrl = `https://www.robotevents.com/api/v2/teams?program[]=1&season[]=197&myTeams=false&registered=true`; // TODO: 204 for 2026-2027 override season
+    const apiUrl = `${API_BASE_URL}/teams?program[]=1&season[]=197&myTeams=false&registered=true`; // TODO: 204 for 2026-2027 override season
 
     function fetchDataForPage(page) {
       fetch(`${apiUrl}?myTeams=false&page=${page}&per_page=250`, {
