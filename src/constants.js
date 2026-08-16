@@ -13,4 +13,4 @@ export const SEASONS = [
 ];
 
 // Default season used across the app until the user selects a different one.
-export const DEFAULT_SEASON = 197;
+export const DEFAULT_SEASON = 204;
