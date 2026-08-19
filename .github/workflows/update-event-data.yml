@@ -35,10 +35,10 @@ jobs:
       - name: Fetch event data
         run: python scripts/eventData.py
 
-      - name: Move result into public/src
+      - name: Move result into public/static
         run: |
-          mkdir -p public/src
-          mv eventData_*.json public/src/
+          mkdir -p public/static
+          mv eventData_*.json public/static/
 
       - name: Commit and push if changed
         run: |
