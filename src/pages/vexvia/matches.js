@@ -4,6 +4,7 @@ import DivisionNavbar from "./DivisionNavbar";
 import "../../page-styles/vexvia/matches.css"
 import DropdownMenuComponent from "./Dropdown";
 import { API_BASE_URL } from '../../constants';
+import { useSeason } from '../../context/SeasonContext';
 
 const Display = ({ number, name, ranking, wp, ap, sp, wins, losses, ties, id }) => {
   const { event_id } = useParams();
@@ -76,6 +77,7 @@ const Matches = () => {
   const { event_id } = useParams();
   const { division_id } = useParams();
   const [activePage, setActivePage] = useState("schedule"); // Default active page
+  const { season } = useSeason();
 
   // Use state to store fetched data
   const [scheduleData, setScheduleData] = useState(null);
@@ -93,15 +95,26 @@ const Matches = () => {
   const eventURL = `${API_BASE_URL}/events/${event_id}/`
   // Fetch data when active page changes
   useEffect(() => {
-    // Fetch schedule data
-    fetch(`${eventURL}divisions/${division_id}/matches?per_page=250`, {
+    // Fetch schedule data (paginated, since a division can have more than 250 matches)
+    function fetchMatchesPage(page, accumulated) {
+      return fetch(`${eventURL}divisions/${division_id}/matches?per_page=250&page=${page}`, {
         headers: {
-            Authorization: `Bearer ${accessToken}`
-          }
+          Authorization: `Bearer ${accessToken}`
+        }
       })
-      .then((response) => response.json())
-      .then((data) => {
-        setScheduleData(data.data);
+        .then((response) => response.json())
+        .then((data) => {
+          const combined = [...accumulated, ...data.data];
+          if (page < data.meta.last_page) {
+            return fetchMatchesPage(page + 1, combined);
+          }
+          return combined;
+        });
+    }
+
+    fetchMatchesPage(1, [])
+      .then((allMatches) => {
+        setScheduleData(allMatches);
       })
       .catch((error) => {
         console.error("Error fetching schedule data:", error);
@@ -122,7 +135,7 @@ const Matches = () => {
         console.error("Error fetching rankings data:", error);
       });
 
-    const apiUrl = `${API_BASE_URL}/teams?program[]=1&season[]=197&myTeams=false&registered=true`; // TODO: 204 for 2026-2027 override season
+    const apiUrl = `${API_BASE_URL}/teams?program[]=1&season[]=${season}&myTeams=false&registered=true`;
 
     function fetchDataForPage(page) {
       fetch(`${apiUrl}?myTeams=false&page=${page}&per_page=250`, {
@@ -159,7 +172,7 @@ const Matches = () => {
         console.error("Error fetching teams data:", error);
       });
       
-  }, [activePage]);
+  }, [activePage, season]);
 
   useEffect(() => {
     // console.log(teamsData)

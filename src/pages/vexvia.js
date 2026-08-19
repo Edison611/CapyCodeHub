@@ -5,56 +5,36 @@ import '../page-styles/vexvia.css'
 import { useNavigate } from "react-router-dom";
 import logo from "../images/logo.png"
 import LoadingPage from '../components/Loading';
-import { API_BASE_URL } from '../constants';
+import { useSeason } from '../context/SeasonContext';
+import SeasonSelector from '../components/SeasonSelector';
 
 function Vexvia() {
   const navigate = useNavigate();
   const [inputText, setInputText] = useState("");
+  const { season } = useSeason();
 
   var [events, setEvents] = useState([]);
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(true);
 
-  // Access Token (DO NOT CHANGE)
-  const accessToken = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiIzIiwianRpIjoiMGJmMTdkZmIxZWRjMmRlZGQ5MjhmM2ZkODEzZDNkNWM1ZjNjOGU3OTUwY2JhYTIzODA5YzIwNzM3OGE4ZmFjZTZiMGIyODdlMjdmODM4NjIiLCJpYXQiOjE2OTE5ODQ4MDMuMDAyNTA3OSwibmJmIjoxNjkxOTg0ODAzLjAwMjUxMSwiZXhwIjoyNjM4NzU5NjAyLjk5NzEyOTksInN1YiI6IjExNzQzOSIsInNjb3BlcyI6W119.opzagy4WRMMhh3LQQhk0Fp-2NGo37AushuMGtU4cS6VwkxhsL-YdEzq18x1ocXLxj_Ip_1J41dL3NaVgCDUkrHZRA2eR-taKXKh7OZo3W-s9PJJjGKb4RyolAIPUWiQzQKdzbbKsvXoqdFAK8zfiEE_jjMIww9eXEEzd_COI2FtIp4BBgR84ss_RsuLWcT9r0OjW810iZTBzep96KwJPQDatq6RXTMIpc04HZcYUJah1l4hAjQlpReER4CKQ7w5IdPXzdOS1He-eToEwpIKTPXKoxnAcnwdOQWiJj3RAXFf9lVM5n9s7K-OdSMTBS3LKDlzxfJHAYQwC0Wpdr4LnMol4LcyZksyVXu-bb-vxxYeYm88ziIsLeCef0l9qHf_D46_jfln2e8cpaK88VBkKQmQO3gI8PB-QY4h0hGWwO3-WLV2vR_8TwwAoaw9Hds02NCKNNRzMI7ShqRyonjcTn5O1t2BwSrwnOVDTUGYf5EFWIjEbGB8B-xuqfCFqtq9u8kzeFqszgAUzdYOomsdjB35U5mWP7shOm4HRUm5I6OEmUTu5NZnRHLP8vZpIdS1_81WT2wCdyB6qxfIn3SuJk44EklLPzN4H6KkVH74j6J5d8CkB--NY74WyQVHapmGo4Dr9siIjg4am6w2nqYjbi3zVGxSk_aBYM5PoMDHnATY';
-
-  // Fetches team data
+  // Fetches event data from the static JSON file
   useEffect(() => {
-    const apiUrl = `${API_BASE_URL}/events`;
+    setEvents([]);
+    setLoading(true);
 
-    function fetchDataForPage(page){
-
-      fetch(`${apiUrl}?page=${page}&per_page=250&season%5B%5D=197&eventTypes%5B%5D=tournament`, { // TODO: 204 for 2026-2027 override season
-        headers: {
-          Authorization: `Bearer ${accessToken}`
-        }
-      })
+    fetch(`/static/eventData_${season}.json`)
       .then(response => {
         return response.json();
       })
       .then(data => {
-        setEvents(prevData => [...prevData, ...data.data])
+        setEvents(Object.values(data));
+        setLoading(false);
       })
       .catch(error => {
         setError(error);
+        setLoading(false);
       });
-    }
-    const totalPages = 30; // should be 5 for full use
-
-    function fetchAllData() {
-      const fetchPromises = [];
-      for (let page = 1; page <= totalPages; page++) {
-        fetchPromises.push(fetchDataForPage(page));
-      }
-      Promise.all(fetchPromises)
-      setLoading(false);
-    }
-
-    fetchAllData();
-    
-
-    
-  }, [accessToken]);
+  }, [season]);
 
 
   const filteredData = (events.filter((el) => {
@@ -105,6 +85,9 @@ function Vexvia() {
   
   return (
     <div className="main">
+      <div style={{ display: 'flex', justifyContent: 'flex-end', padding: '0.75rem 0' }}>
+        <SeasonSelector />
+      </div>
       <img src={logo} onClick={ () => navigate("/")} alt="" className='logo2'></img>
       <div className='mb-4 text-3xl font-bold leading-none tracking-tight text-gray-900 md:text-5xl lg:text-5xl pt-10'>Events</div>
       <div className="search">
