@@ -1,0 +1,53 @@
+name: Update event data
+
+on:
+  # Every 7 days, Sundays at 06:00 UTC.
+  schedule:
+    - cron: "0 6 * * 0"
+  # Allows running manually from the Actions tab.
+  workflow_dispatch:
+
+# Needed so the job can push the regenerated JSON back to the repo.
+permissions:
+  contents: write
+
+# Never let two updates race each other.
+concurrency:
+  group: update-event-data
+  cancel-in-progress: false
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install dependencies
+        run: pip install requests==2.32.3
+
+      - name: Fetch event data
+        run: python scripts/eventData.py
+
+      - name: Move result into public/src
+        run: |
+          mkdir -p public/src
+          mv eventData_*.json public/src/
+
+      - name: Commit and push if changed
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add public/src
+          if git diff --staged --quiet; then
+            echo "Event data unchanged — nothing to commit."
+          else
+            git commit -m "chore: update event data"
+            git push
+          fi

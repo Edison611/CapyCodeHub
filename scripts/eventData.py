@@ -39,8 +39,8 @@ for page in range(math.ceil(total/250)):
             "location": event["location"],
         })
 
-    print("Page:", page+1, "DONE")
-    print(data)
+    # print("Page:", page+1, "DONE")
+    # print(data)
 
 with open(f"eventData_{season}.json", 'w') as f:
     json.dump(data, f)
