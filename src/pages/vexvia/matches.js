@@ -95,15 +95,26 @@ const Matches = () => {
   const eventURL = `${API_BASE_URL}/events/${event_id}/`
   // Fetch data when active page changes
   useEffect(() => {
-    // Fetch schedule data
-    fetch(`${eventURL}divisions/${division_id}/matches?per_page=250`, {
+    // Fetch schedule data (paginated, since a division can have more than 250 matches)
+    function fetchMatchesPage(page, accumulated) {
+      return fetch(`${eventURL}divisions/${division_id}/matches?per_page=250&page=${page}`, {
         headers: {
-            Authorization: `Bearer ${accessToken}`
-          }
+          Authorization: `Bearer ${accessToken}`
+        }
       })
-      .then((response) => response.json())
-      .then((data) => {
-        setScheduleData(data.data);
+        .then((response) => response.json())
+        .then((data) => {
+          const combined = [...accumulated, ...data.data];
+          if (page < data.meta.last_page) {
+            return fetchMatchesPage(page + 1, combined);
+          }
+          return combined;
+        });
+    }
+
+    fetchMatchesPage(1, [])
+      .then((allMatches) => {
+        setScheduleData(allMatches);
       })
       .catch((error) => {
         console.error("Error fetching schedule data:", error);

@@ -8,9 +8,9 @@ export const API_BASE_URL = 'https://events.vex.com/api/v2';
 // Add new seasons here as they are released (check the RobotEvents API for new ids).
 export const SEASONS = [
   { id: 204, name: '2026-2027: Override' },
-  { id: 197, name: '2025-2026: High Stakes' },
-  { id: 190, name: '2024-2025: Over Under' },
+  { id: 197, name: '2025-2026: Push Back' },
+  { id: 190, name: '2024-2025: High Stakes' },
 ];
 
 // Default season used across the app until the user selects a different one.
-export const DEFAULT_SEASON = 204;
+export const DEFAULT_SEASON = 204;  
