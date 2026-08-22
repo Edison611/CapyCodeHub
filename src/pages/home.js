@@ -9,11 +9,18 @@ import HeroLink from '../components/HeroLink';
 import field from '../images/field.png';
 import scouting from "../images/scouting.png"
 
+// Spline editor -> Export -> Code -> React, then copy the scene URL.
+const HERO_SCENE = 'https://prod.spline.design/1MifSG-HXEi3PsPb/scene.splinecode';
+
 const Home = () => {
   return (
     <div>
-      <Hero image={logo} title={"Capybaras (2055) Programming Website"} />
-    
+      <Hero
+        image={logo}
+        title={"Capybaras (2055) Programming Website"}
+        scene={HERO_SCENE}
+      />
+
       <main>
       <section className="project-info">
           <div className='subheader'>Welcome to 2055's Programming Website!</div>
