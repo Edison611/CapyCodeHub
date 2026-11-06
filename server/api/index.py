@@ -14,9 +14,9 @@ def test():
 
 @app.route('/stats', methods=['POST'])
 def stats_function():
-    data = request.get_json()
-    matchData = data['matchData']
-    teamData = data['teamData']
+    data = request.get_json(silent=True) or {}
+    matchData = data.get('matchData') or []
+    teamData = data.get('teamData') or []
     if len(matchData) == 0 or len(teamData) == 0:
         return jsonify({})
 
@@ -35,16 +35,20 @@ def stats_function():
     dprScores = []
 
     for match in matchData:
-        if match['round'] != 2:
+        if match.get('round') != 2:
             continue
         r1 = [0 for _ in range(len(teamData))]
         r2 = [0 for _ in range(len(teamData))]
-        team1, team2 = [], []
-        a1 = match['alliances'][0]
-        a2 = match['alliances'][1]
-
-        t1, t2 = match['alliances'][0]['teams'][0]['team']['name'], match['alliances'][0]['teams'][1]['team']['name']
-        t3, t4 = match['alliances'][1]['teams'][0]['team']['name'], match['alliances'][1]['teams'][1]['team']['name']
+        try:
+            a1 = match['alliances'][0]
+            a2 = match['alliances'][1]
+            t1, t2 = a1['teams'][0]['team']['name'], a1['teams'][1]['team']['name']
+            t3, t4 = a2['teams'][0]['team']['name'], a2['teams'][1]['team']['name']
+        except (KeyError, IndexError, TypeError):
+            continue
+        # Skip matches with teams we don't have data for
+        if any(t not in teamToNum for t in (t1, t2, t3, t4)):
+            continue
 
         r1[teamToNum[t1]], r1[teamToNum[t2]] = 1, 1
         oprArr.append(r1)
@@ -57,6 +61,9 @@ def stats_function():
         oprScores.append(a2['score'])
         dprArr.append(r2)
         dprScores.append(a1['score'])
+
+    if len(oprArr) == 0:
+        return jsonify({})
 
     # Convert to Numpy for more vector functions
     oprArr = np.array(oprArr)

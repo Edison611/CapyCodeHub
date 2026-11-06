@@ -135,30 +135,6 @@ const Matches = () => {
         console.error("Error fetching rankings data:", error);
       });
 
-    const apiUrl = `${API_BASE_URL}/teams?program[]=1&season[]=${season}&myTeams=false&registered=true`;
-
-    function fetchDataForPage(page) {
-      fetch(`${apiUrl}?myTeams=false&page=${page}&per_page=250`, {
-        headers: {
-          Authorization: `Bearer ${accessToken}`
-        }
-      })
-      .then(response => response.json())
-      .then(d => setTeamsData(prevData => [...prevData, ...d.data]))
-    }
-
-    const totalPages = 5;
-
-    function fetchAllData() {
-      const fetchPromises = [];
-      for (let page = 0; page <= totalPages; page++) {
-        fetchPromises.push(fetchDataForPage(page));
-      }
-      Promise.all(fetchPromises)
-    }
-
-    fetchAllData();
-
     fetch(`${eventURL}teams?per_page=250`, {
       headers: {
           Authorization: `Bearer ${accessToken}`
@@ -166,7 +142,7 @@ const Matches = () => {
       })
       .then((response) => response.json())
       .then((data) => {
-        setTeamsData(data.data);
+        setTeamsData(data.data || []);
       })
       .catch((error) => {
         console.error("Error fetching teams data:", error);
@@ -175,8 +151,8 @@ const Matches = () => {
   }, [activePage, season]);
 
   useEffect(() => {
-    // console.log(teamsData)
-    // console.log(scheduleData)
+    // Wait until both teams and matches have loaded
+    if (!teamsData.length || !scheduleData || !scheduleData.length) return;
     fetch('https://capycodehub-api.vercel.app/stats', {
         method: 'POST',
         headers: {
@@ -184,7 +160,10 @@ const Matches = () => {
         },
         body: JSON.stringify({ teamData : teamsData, matchData : scheduleData}),
       })
-        .then(response => response.json())
+        .then(response => {
+          if (!response.ok) throw new Error(`Stats request failed: ${response.status}`);
+          return response.json();
+        })
         .then(jsonData => setStatsData(jsonData))
         .catch(error => console.error('Error:', error));
     }, [teamsData, scheduleData]);
@@ -213,13 +192,13 @@ const Matches = () => {
       }
     })
   }
-  console.log(statsData)
   const [sortBy, setSortBy] = useState(null);
   const sortByCriterion = (criterion) => {
     setSortBy(criterion);
 };
 
 const sortedTeams = () => {
+    if (!statsData || !statsData.OPR) return [];
     const teamsArray = Object.keys(statsData.OPR).map(team => ({
         team: team,
         data: {
